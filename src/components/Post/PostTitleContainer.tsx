@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 
 import PostTitle from "./PostTitle";
-import { useImageUrl } from "../../src/hooks";
+import { useImageUrl } from "../../hooks";
 
 function PostTitleContainer({ post }: any) {
   const router = useRouter();
