@@ -2,7 +2,8 @@ import { Amplify, Auth, Hub } from "aws-amplify";
 import { PropsWithChildren, useContext, useEffect, useState } from "react";
 import { createContext } from "react";
 
-import awsConfig from '../src/aws-exports';
+import awsConfig from '../aws-exports';
+
 Amplify.configure({ ...awsConfig, ssr: true });
 
 type ContextType = {
