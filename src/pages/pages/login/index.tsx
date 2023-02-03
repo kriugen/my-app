@@ -4,6 +4,7 @@ import { Auth } from "aws-amplify";
 import Form from "./Form";
 import { ReactNode } from "react";
 import BlankLayout from "src/@core/layouts/BlankLayout";
+import nprogress from "nprogress";
 
 // import { useErrorContext } from "../ErrorContextProvider";
 // import { useLoadingContext } from "../LoadingContextProvider";
@@ -16,6 +17,10 @@ function Container({ referer }: any) {
   
   const onSubmit = async ({ username, password }: any) => {
     try {
+      nprogress.start();
+      
+return;
+
       //setLoading(true);
       await Auth.signIn(username, password);
       if (referer) {
@@ -25,7 +30,7 @@ function Container({ referer }: any) {
       }
     } catch (e: any) {
         if (e.code == 'UserNotConfirmedException') {
-          router.push({ 
+          router.push({
               pathname: '/signup/confirm',
               query: { username: encodeURIComponent(username), },
           });
@@ -36,7 +41,7 @@ function Container({ referer }: any) {
   };
 
   //return <Form onSubmit={onSubmit} loading={loading} />;
-  return <Form />;
+  return <Form onSubmit={ onSubmit }/>;
 }
 
 Container.getLayout = (page: ReactNode) => <BlankLayout>{page}</BlankLayout>

@@ -62,7 +62,7 @@ const FormControlLabel = styled(MuiFormControlLabel)<FormControlLabelProps>(({ t
   }
 }))
 
-const LoginPage = () => {
+const LoginPage = ({ onSubmit }: any) => {
   // ** State
   const [values, setValues] = useState<State>({
     password: '',
@@ -205,7 +205,7 @@ const LoginPage = () => {
               size='large'
               variant='contained'
               sx={{ marginBottom: 7 }}
-              onClick={() => router.push('/')}
+              onClick={() => onSubmit({ username: 'yo', password: 'pass' })}
             >
               Login
             </Button>
