@@ -1,5 +1,6 @@
 // ** React Imports
 import { useState, Fragment, ChangeEvent, MouseEvent, ReactNode } from 'react'
+import * as yup from "yup";
 
 // ** Next Imports
 import Link from 'next/link'
@@ -31,9 +32,6 @@ import EyeOffOutline from 'mdi-material-ui/EyeOffOutline'
 
 // ** Configs
 import themeConfig from 'src/configs/themeConfig'
-
-// ** Layout Import
-import BlankLayout from 'src/@core/layouts/BlankLayout'
 
 // ** Demo Imports
 import FooterIllustrationsV1 from 'src/views/pages/auth/FooterIllustration'
