@@ -3,10 +3,12 @@ import { useRouter } from "next/router";
 import { API, Storage } from "aws-amplify";
 import { v4 as uuid } from "uuid";
 
-import Form from "./EditPostForm";
-import { createPost, updatePost } from "../../src/graphql/mutations";
-import { useErrorContext } from "../ErrorContextProvider";
-import { useImageUrl } from "../../src/hooks";
+import Form from "../../../components/Post/EditPostForm";
+import { useErrorContext } from "../../../components/ErrorContextProvider";
+import { GetServerSideProps } from "next";
+import { getPost } from "src/graphql/queries";
+import { useImageUrl } from "src/hooks";
+import { createPost, updatePost } from "src/graphql/mutations";
 
 function FormContainer({ post }: any) {
   const router = useRouter();
@@ -42,7 +44,8 @@ function FormContainer({ post }: any) {
       });
     } catch (e: any) {
       setError(e);
-      return null;
+      
+return null;
     }
 
     return id;
@@ -61,7 +64,8 @@ function FormContainer({ post }: any) {
       });
     } catch (e: any) {
       setError(e);
-      return null;
+      
+return null;
     }
 
     return formData.id;
@@ -73,6 +77,20 @@ function FormContainer({ post }: any) {
     imageUrl={imageUrl} 
     setImage={setImage} 
   />;
+}
+
+export const getServerSideProps: GetServerSideProps = async ({ params }: any) => {
+  const { id } = params;
+  const postData: any = await API.graphql({
+    query: getPost,
+    variables: { id },
+  });
+  
+  return {
+    props: {
+      post: postData.data.getPost,
+    },
+  };
 }
 
 export default FormContainer;
