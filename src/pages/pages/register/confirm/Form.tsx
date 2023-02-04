@@ -3,8 +3,10 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 
 import { useEffect } from "react";
-import { Box, Button, Card, CardContent, TextField } from "@mui/material";
+import { Box, Button, CardContent, styled, TextField } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
+import FooterIllustrationsV1 from "src/views/pages/auth/FooterIllustration";
+import MuiCard, { CardProps } from '@mui/material/Card'
 
 const schema = yup.object({
   username: yup.string().min(3).max(128).required(),
@@ -12,6 +14,10 @@ const schema = yup.object({
 });
 
 export type ConfirmSignUpFormValue = yup.InferType<typeof schema>
+
+const Card = styled(MuiCard)<CardProps>(({ theme }) => ({
+  [theme.breakpoints.up('sm')]: { width: '28rem' }
+}))
 
 const ConfirmSignUpForm = ({ username, message, onSubmit, onResend }: any) => {
   const { register, reset, handleSubmit, getValues, formState: { errors } } = useForm<ConfirmSignUpFormValue>({
@@ -69,6 +75,7 @@ const ConfirmSignUpForm = ({ username, message, onSubmit, onResend }: any) => {
         </form>
       </CardContent>
     </Card>
+    <FooterIllustrationsV1 />
   </Box>
 };
 
