@@ -30,6 +30,9 @@ import 'react-perfect-scrollbar/dist/css/styles.css'
 // ** Global css styles
 import '../../styles/globals.css'
 import { AuthContextProvider } from 'src/components/AuthContextProvider'
+import { ErrorContextProvider } from 'src/components/ErrorContextProvider'
+import { LoadingContextProvider } from 'src/components/LoadingContextProvider'
+import ErrorAlert from 'src/components/ErrorAlert'
 
 // ** Extend App Props with Emotion
 type ExtendedAppProps = AppProps & {
@@ -71,15 +74,22 @@ const App = (props: ExtendedAppProps) => {
         <meta name='viewport' content='initial-scale=1, width=device-width' />
       </Head>
 
-      <AuthContextProvider>
-      <SettingsProvider>
-        <SettingsConsumer>
-          {({ settings }) => {
-            return <ThemeComponent settings={settings}>{getLayout(<Component {...pageProps} />)}</ThemeComponent>
-          }}
-        </SettingsConsumer>
-      </SettingsProvider>
-      </AuthContextProvider>
+      <ErrorContextProvider>
+        <AuthContextProvider>
+        <LoadingContextProvider>
+          <SettingsProvider>
+            <SettingsConsumer>
+              {({ settings }) => {
+                return <ThemeComponent settings={settings}>
+                  <ErrorAlert />
+                  {getLayout(<Component {...pageProps} />)}
+                </ThemeComponent>
+              }}
+            </SettingsConsumer>
+          </SettingsProvider>
+        </LoadingContextProvider>
+        </AuthContextProvider>
+      </ErrorContextProvider>
     </CacheProvider>
   )
 }

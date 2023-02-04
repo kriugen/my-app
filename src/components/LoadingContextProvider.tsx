@@ -29,7 +29,8 @@ export const LoadingContextProvider = ({ children }: PropsWithChildren) => {
     }
 
     router.events.on('routeChangeComplete', handleRouteChange)
-    return () => {
+    
+return () => {
       router.events.off('routeChangeComplete', handleRouteChange)
     }
   }, [router.events]);

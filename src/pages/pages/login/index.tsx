@@ -4,24 +4,19 @@ import { Auth } from "aws-amplify";
 import Form from "./Form";
 import { ReactNode } from "react";
 import BlankLayout from "src/@core/layouts/BlankLayout";
-import nprogress from "nprogress";
 
-// import { useErrorContext } from "../ErrorContextProvider";
-// import { useLoadingContext } from "../LoadingContextProvider";
+import { useErrorContext } from "src/components/ErrorContextProvider";
+import { useLoadingContext } from "src/components/LoadingContextProvider";
 
-function Container({ referer }: any) {
+function Page({ referer }: any) {
   const router = useRouter();
 
-  // const {setError} = useErrorContext();
-  // const { loading, setLoading } = useLoadingContext();
+  const {setError} = useErrorContext();
+  const { loading, setLoading } = useLoadingContext();
   
   const onSubmit = async ({ username, password }: any) => {
     try {
-      nprogress.start();
-      
-return;
-
-      //setLoading(true);
+      setLoading(true);
       await Auth.signIn(username, password);
       if (referer) {
         router.back();
@@ -35,15 +30,23 @@ return;
               query: { username: encodeURIComponent(username), },
           });
         } else {
-          //setError(e.message);
+          setError(e.message);
         }
       }
   };
 
   //return <Form onSubmit={onSubmit} loading={loading} />;
-  return <Form onSubmit={ onSubmit }/>;
+  return <Form onSubmit={ onSubmit } loading={ loading } />;
 }
 
-Container.getLayout = (page: ReactNode) => <BlankLayout>{page}</BlankLayout>
+Page.getLayout = (page: ReactNode) => <BlankLayout>{page}</BlankLayout>
 
-export default Container;
+export async function getServerSideProps(context: any) {
+  return {
+    props: {
+      referer: context.req.headers.referer ?? null,
+    },
+  };
+}
+
+export default Page;
