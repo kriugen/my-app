@@ -1,12 +1,8 @@
 // ** React Imports
-import { ChangeEvent, MouseEvent, ReactNode, useState } from 'react'
+import { useState, Fragment, ChangeEvent, MouseEvent, ReactNode } from 'react'
 
 // ** Next Imports
 import Link from 'next/link'
-import { useRouter } from 'next/router'
-
-import * as yup from "yup";
-import { yupResolver } from '@hookform/resolvers/yup';
 
 // ** MUI Components
 import Box from '@mui/material/Box'
@@ -14,8 +10,8 @@ import Button from '@mui/material/Button'
 import Divider from '@mui/material/Divider'
 import Checkbox from '@mui/material/Checkbox'
 import TextField from '@mui/material/TextField'
-import InputLabel from '@mui/material/InputLabel'
 import Typography from '@mui/material/Typography'
+import InputLabel from '@mui/material/InputLabel'
 import IconButton from '@mui/material/IconButton'
 import CardContent from '@mui/material/CardContent'
 import FormControl from '@mui/material/FormControl'
@@ -33,10 +29,16 @@ import Facebook from 'mdi-material-ui/Facebook'
 import EyeOutline from 'mdi-material-ui/EyeOutline'
 import EyeOffOutline from 'mdi-material-ui/EyeOffOutline'
 
+// ** Configs
 import themeConfig from 'src/configs/themeConfig'
 
+// ** Layout Import
+import BlankLayout from 'src/@core/layouts/BlankLayout'
+
+// ** Demo Imports
 import FooterIllustrationsV1 from 'src/views/pages/auth/FooterIllustration'
 import { useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
 
 interface State {
   password: string
@@ -55,6 +57,8 @@ const LinkStyled = styled('a')(({ theme }) => ({
 }))
 
 const FormControlLabel = styled(MuiFormControlLabel)<FormControlLabelProps>(({ theme }) => ({
+  marginTop: theme.spacing(1.5),
+  marginBottom: theme.spacing(4),
   '& .MuiFormControlLabel-label': {
     fontSize: '0.875rem',
     color: theme.palette.text.secondary
@@ -63,31 +67,32 @@ const FormControlLabel = styled(MuiFormControlLabel)<FormControlLabelProps>(({ t
 
 const schema = yup.object({
   username: yup.string().min(3).max(128).required(),
+  email: yup.string().email("Should be valid email").required(),
   password: yup.string().required(),
 });
 
-export type LoginFormValue = yup.InferType<typeof schema>
+export type FormValue = yup.InferType<typeof schema>
 
-const LoginPage = ({ onSubmit, loading }: any) => {
-  const { register, handleSubmit, formState: { errors } } = useForm<LoginFormValue>({
+const RegisterPage = ({ onSubmit }: any) => {
+  const { register, handleSubmit, formState: { errors } } = useForm<FormValue>({
     resolver: yupResolver(schema)
   });
-
+  
+  // ** States
   const [values, setValues] = useState<State>({
     password: '',
     showPassword: false
   })
 
+  // ** Hook
   const theme = useTheme()
 
   const handleChange = (prop: keyof State) => (event: ChangeEvent<HTMLInputElement>) => {
     setValues({ ...values, [prop]: event.target.value })
   }
-
   const handleClickShowPassword = () => {
     setValues({ ...values, showPassword: !values.showPassword })
   }
-
   const handleMouseDownPassword = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
   }
@@ -112,12 +117,15 @@ const LoginPage = ({ onSubmit, loading }: any) => {
           </Box>
           <Box sx={{ mb: 6 }}>
             <Typography variant='h5' sx={{ fontWeight: 600, marginBottom: 1.5 }}>
-              Welcome to {themeConfig.templateName}! 👋🏻
+              Adventure starts here 🚀
             </Typography>
-            <Typography variant='body2'>Please sign-in to your account and start the adventure</Typography>
+            <Typography variant='body2'>Make your app management easy and fun!</Typography>
           </Box>
           <form noValidate autoComplete='off' onSubmit={handleSubmit(onSubmit)}>
             <TextField autoFocus fullWidth 
+              id='username' 
+              label='Username' 
+              sx={{ marginBottom: 4 }} 
               {...register("username")}
               error={!!errors.username}
               helperText={
@@ -128,27 +136,35 @@ const LoginPage = ({ onSubmit, loading }: any) => {
               inputProps={{
                 "data-test": "username"
               }} 
-              id='email' 
+            />
+            <TextField fullWidth type='email' 
               label='Email' 
-              sx={{ marginBottom: 4 }} 
+              sx={{ marginBottom: 4 }}
+
+              {...register("email")}
+              error={!!errors.email}
+              helperText={
+                errors.email 
+                  ? <span data-test='invoice-number-error'>{errors.email.message}</span>
+                  : " "
+              }
+              inputProps={{
+                "data-test": "email"
+              }}
             />
             <FormControl fullWidth>
-              <InputLabel htmlFor='auth-login-password'>Password</InputLabel>
+              <InputLabel htmlFor='auth-register-password'>Password</InputLabel>
               <OutlinedInput
+                label='Password'
+                id='auth-register-password'
+                type={values.showPassword ? 'text' : 'password'}
+
                 {...register("password")}
                 error={!!errors.password}
-                label='Password'
-
-                // helperText={
-                //   errors.password 
-                //     ? <span data-test='invoice-number-error'>{errors.password.message}</span>
-                //     : " "
-                // }
                 inputProps={{
                   "data-test": "password"
                 }}
-                id='auth-login-password'
-                type={values.showPassword ? 'text' : 'password'}
+                
                 endAdornment={
                   <InputAdornment position='end'>
                     <IconButton
@@ -157,37 +173,35 @@ const LoginPage = ({ onSubmit, loading }: any) => {
                       onMouseDown={handleMouseDownPassword}
                       aria-label='toggle password visibility'
                     >
-                      {values.showPassword ? <EyeOutline /> : <EyeOffOutline />}
+                      {values.showPassword ? <EyeOutline fontSize='small' /> : <EyeOffOutline fontSize='small' />}
                     </IconButton>
                   </InputAdornment>
                 }
               />
             </FormControl>
-            <Box
-              sx={{ mb: 4, display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'space-between' }}
-            >
-              <FormControlLabel control={<Checkbox />} label='Remember Me' />
-              <Link passHref href='/'>
-                <LinkStyled onClick={e => e.preventDefault()}>Forgot Password?</LinkStyled>
-              </Link>
-            </Box>
-            <Button
-              fullWidth
-              size='large'
-              type="submit"
-              variant='contained'
-              sx={{ marginBottom: 7 }}
-              data-test="login-button"
-            >
-              Login
+            <FormControlLabel
+              control={<Checkbox />}
+              label={
+                <Fragment>
+                  <span>I agree to </span>
+                  <Link href='/' passHref>
+                    <LinkStyled onClick={(e: MouseEvent<HTMLElement>) => e.preventDefault()}>
+                      privacy policy & terms
+                    </LinkStyled>
+                  </Link>
+                </Fragment>
+              }
+            />
+            <Button fullWidth size='large' type='submit' variant='contained' sx={{ marginBottom: 7 }}>
+              Sign up
             </Button>
             <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
               <Typography variant='body2' sx={{ marginRight: 2 }}>
-                New on our platform?
+                Already have an account?
               </Typography>
               <Typography variant='body2'>
-                <Link passHref href='/pages/register'>
-                  <LinkStyled>Create an account</LinkStyled>
+                <Link passHref href='/pages/login'>
+                  <LinkStyled>Sign in instead</LinkStyled>
                 </Link>
               </Typography>
             </Box>
@@ -224,4 +238,4 @@ const LoginPage = ({ onSubmit, loading }: any) => {
   )
 }
 
-export default LoginPage
+export default RegisterPage
