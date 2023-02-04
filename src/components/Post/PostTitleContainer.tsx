@@ -8,7 +8,7 @@ function PostTitleContainer({ post }: any) {
   const imageUrl = useImageUrl(post);
 
   return <PostTitle 
-    post={post} 
+    post={post}
     imageUrl={imageUrl}
     onClick={() => router.push('/posts/' + post.id)} 
   />;

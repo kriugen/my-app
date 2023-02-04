@@ -9,11 +9,6 @@ import { VerticalNavItemsType } from 'src/@core/layouts/types'
 const navigation = (): VerticalNavItemsType => {
   return [
     {
-      title: 'About',
-      icon: InformationOutline,
-      path: '/about'
-    },
-    {
       title: 'Pricing',
       icon: CurrencyUsd,
       path: '/pricing'
@@ -22,6 +17,11 @@ const navigation = (): VerticalNavItemsType => {
       title: 'FAQ',
       icon: HelpCircleOutline,
       path: '/faq'
+    },
+    {
+      title: 'About',
+      icon: InformationOutline,
+      path: '/about'
     },
   ]
 }
