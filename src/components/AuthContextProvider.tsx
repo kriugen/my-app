@@ -8,10 +8,12 @@ Amplify.configure({ ...awsConfig, ssr: true });
 
 type ContextType = {
     user: { username: string } | null,
+    logOut: () => void,
 }
 
 const defaultValue = {
     user: null,
+    logOut: () => { throw new Error('Context not initialized'); }
 }
 
 const AuthContext = createContext<ContextType>(defaultValue);
@@ -39,8 +41,10 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
     }
   }
 
+  const logOut = () => Auth.signOut();
+  
   return (
-    <AuthContext.Provider value={{ user }}>
+    <AuthContext.Provider value={{ user, logOut }}>
       {children}
     </AuthContext.Provider>
   );
