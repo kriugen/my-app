@@ -1,6 +1,7 @@
 // ** Icon imports
-import HomeOutline from 'mdi-material-ui/HomeOutline'
 import InformationOutline from 'mdi-material-ui/InformationOutline'
+import CurrencyUsd from 'mdi-material-ui/CurrencyUsd'
+import HelpCircleOutline from 'mdi-material-ui/HelpCircleOutline'
 
 // ** Type import
 import { VerticalNavItemsType } from 'src/@core/layouts/types'
@@ -8,14 +9,19 @@ import { VerticalNavItemsType } from 'src/@core/layouts/types'
 const navigation = (): VerticalNavItemsType => {
   return [
     {
-      title: 'Posts',
-      icon: HomeOutline,
-      path: '/'
-    },
-    {
       title: 'About',
       icon: InformationOutline,
       path: '/about'
+    },
+    {
+      title: 'Pricing',
+      icon: CurrencyUsd,
+      path: '/pricing'
+    },
+    {
+      title: 'FAQ',
+      icon: HelpCircleOutline,
+      path: '/faq'
     },
   ]
 }
