@@ -79,7 +79,8 @@ const UserDropdown = () => {
         <Avatar
           onClick={handleDropdownOpen}
           sx={{ width: 40, height: 40 }}
-          src='/images/avatars/login.svg'
+          src='/images/avatars/broken-link.png'
+          alt={ user ? user.username : '' }
         />
       </Badge>
       <Menu
@@ -90,14 +91,18 @@ const UserDropdown = () => {
         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
-        { user ? <><Box sx={{ pt: 2, pb: 3, px: 4 }}>
+        { user ? <div><Box sx={{ pt: 2, pb: 3, px: 4 }}>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Badge
               overlap='circular'
               badgeContent={<BadgeContentSpan />}
               anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
             >
-              <Avatar src='/images/avatars/login.svg' sx={{ width: '2.5rem', height: '2.5rem' }} />
+              <Avatar 
+                src='/images/avatars/broken-link.png'
+                alt={ user ? user.username : '' }
+                sx={{ width: '2.5rem', height: '2.5rem' }} 
+              />
             </Badge>
             <Box sx={{ display: 'flex', marginLeft: 3, alignItems: 'flex-start', flexDirection: 'column' }}>
               <Typography sx={{ fontWeight: 600 }}>{ user.username }</Typography>
@@ -149,10 +154,10 @@ const UserDropdown = () => {
         <MenuItem sx={{ py: 2 }} onClick={() => { logOut(); handleDropdownClose() }}>
           <LogoutVariant sx={{ marginRight: 2, fontSize: '1.375rem', color: 'text.secondary' }} />
           Logout
-        </MenuItem></>
+        </MenuItem></div>
         : <MenuItem sx={{ py: 2 }} onClick={() => { handleDropdownClose('/pages/login') }}>
           <LogoutVariant sx={{ marginRight: 2, fontSize: '1.375rem', color: 'text.secondary' }} />
-          Login
+            Login
         </MenuItem>
       }
       </Menu>
