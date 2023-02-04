@@ -90,7 +90,7 @@ const UserDropdown = () => {
         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
-        <Box sx={{ pt: 2, pb: 3, px: 4 }}>
+        { user ? <><Box sx={{ pt: 2, pb: 3, px: 4 }}>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Badge
               overlap='circular'
@@ -100,7 +100,7 @@ const UserDropdown = () => {
               <Avatar src='/images/avatars/login.svg' sx={{ width: '2.5rem', height: '2.5rem' }} />
             </Badge>
             <Box sx={{ display: 'flex', marginLeft: 3, alignItems: 'flex-start', flexDirection: 'column' }}>
-              <Typography sx={{ fontWeight: 600 }}>{ user?.username }</Typography>
+              <Typography sx={{ fontWeight: 600 }}>{ user.username }</Typography>
               <Typography variant='body2' sx={{ fontSize: '0.8rem', color: 'text.disabled' }}>
                 Admin
               </Typography>
@@ -146,10 +146,15 @@ const UserDropdown = () => {
           </Box>
         </MenuItem>
         <Divider />
-        <MenuItem sx={{ py: 2 }} onClick={() => { logOut(); handleDropdownClose('/pages/login') }}>
+        <MenuItem sx={{ py: 2 }} onClick={() => { logOut(); handleDropdownClose() }}>
           <LogoutVariant sx={{ marginRight: 2, fontSize: '1.375rem', color: 'text.secondary' }} />
           Logout
+        </MenuItem></>
+        : <MenuItem sx={{ py: 2 }} onClick={() => { handleDropdownClose('/pages/login') }}>
+          <LogoutVariant sx={{ marginRight: 2, fontSize: '1.375rem', color: 'text.secondary' }} />
+          Login
         </MenuItem>
+      }
       </Menu>
     </Fragment>
   )
