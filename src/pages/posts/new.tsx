@@ -1,22 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { API, Storage } from "aws-amplify";
+import { API, Storage, withSSRContext } from "aws-amplify";
 import { v4 as uuid } from "uuid";
 
 import Form from "../../components/Post/EditPostForm";
 import { useErrorContext } from "../../components/ErrorContextProvider";
 import { GetServerSideProps } from "next";
-import { getPost } from "src/graphql/queries";
-import { useImageUrl } from "src/hooks";
 import { createPost } from "src/graphql/mutations";
 
-function FormContainer({ post }: any) {
+function NewPostPage({ auth }: any) {
   const router = useRouter();
+  useEffect(() => {
+    if (!auth) {
+      router.push('/login');
+    }
+  }, [auth, router]);
+
   const { setError } = useErrorContext();
 
   const [image, setImage] = useState(null);
-  const imageUrl = useImageUrl(post);
-
   const onSubmit = async (formData: any) => {
     const id = await newPost(formData);
     if (id) 
@@ -51,26 +53,35 @@ function FormContainer({ post }: any) {
     return id;
   }
 
+  if (!auth)
+    return null;
+
   return <Form 
     post={null} 
     onSubmit={onSubmit} 
-    imageUrl={imageUrl} 
+    imageUrl={null} 
     setImage={setImage} 
   />;
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ params }: any) => {
-  const { id } = params;
-  const postData: any = await API.graphql({
-    query: getPost,
-    variables: { id },
-  });
-  
-  return {
-    props: {
-      post: postData.data.getPost,
-    },
-  };
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+  const SSR = withSSRContext({ req });
+
+  try {
+    await SSR.Auth.currentAuthenticatedUser();
+    
+return {
+      props: {
+        auth: true,
+      },
+    };
+  } catch {
+    return {
+      props: {
+        auth: false,
+      },
+    };
+  }
 }
 
-export default FormContainer;
+export default NewPostPage;
