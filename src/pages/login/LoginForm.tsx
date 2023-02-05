@@ -179,7 +179,7 @@ const LoginPage = ({ onSubmit, loading }: any) => {
               sx={{ marginBottom: 7 }}
               data-test="login-button"
             >
-              Login
+              Sign In
             </Button>
             <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
               <Typography variant='body2' sx={{ marginRight: 2 }}>
