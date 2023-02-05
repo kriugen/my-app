@@ -119,7 +119,7 @@ const UserDropdown = () => {
           <LogoutVariant sx={{ marginRight: 2, fontSize: '1.375rem', color: 'text.secondary' }} />
           Logout
         </MenuItem></div>
-        : <MenuItem sx={{ py: 2 }} onClick={() => { handleDropdownClose('/pages/login') }}>
+        : <MenuItem sx={{ py: 2 }} onClick={() => { handleDropdownClose('/login') }}>
           <LogoutVariant sx={{ marginRight: 2, fontSize: '1.375rem', color: 'text.secondary' }} />
             Login
         </MenuItem>

@@ -29,7 +29,7 @@ function Page({ referer }: any) {
     } catch (e: any) {
         if (e.code == 'UserNotConfirmedException') {
           router.push({
-              pathname: '/pages/register/confirm',
+              pathname: '/register/confirm',
               query: { username: encodeURIComponent(username), },
           });
         } else {

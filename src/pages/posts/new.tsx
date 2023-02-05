@@ -3,12 +3,12 @@ import { useRouter } from "next/router";
 import { API, Storage } from "aws-amplify";
 import { v4 as uuid } from "uuid";
 
-import Form from "../../../components/Post/EditPostForm";
-import { useErrorContext } from "../../../components/ErrorContextProvider";
+import Form from "../../components/Post/EditPostForm";
+import { useErrorContext } from "../../components/ErrorContextProvider";
 import { GetServerSideProps } from "next";
 import { getPost } from "src/graphql/queries";
 import { useImageUrl } from "src/hooks";
-import { updatePost } from "src/graphql/mutations";
+import { createPost } from "src/graphql/mutations";
 
 function FormContainer({ post }: any) {
   const router = useRouter();
@@ -18,7 +18,7 @@ function FormContainer({ post }: any) {
   const imageUrl = useImageUrl(post);
 
   const onSubmit = async (formData: any) => {
-    const id = await editPost(formData);
+    const id = await newPost(formData);
     if (id) 
       router.push(`/posts/${id}`);
   };
@@ -30,28 +30,29 @@ function FormContainer({ post }: any) {
     }
   }
 
-  const editPost = async (formData: any) => {
-    const postUpdated = (({ id, title, content }: any) => ({ id, title, content }))(formData);
+  const newPost = async (formData: any) => {
+    const id = uuid();
+    formData.id = id;
 
-    await saveImage(postUpdated);
+    await saveImage(formData);
 
     try {
         await API.graphql({
-        query: updatePost,
-        variables: { input: postUpdated },
+        query: createPost,
+        variables: { input: formData },
         authMode: "AMAZON_COGNITO_USER_POOLS",
       });
     } catch (e: any) {
       setError(e);
       
-return null;
+      return null;
     }
 
-    return formData.id;
+    return id;
   }
 
   return <Form 
-    post={post} 
+    post={null} 
     onSubmit={onSubmit} 
     imageUrl={imageUrl} 
     setImage={setImage} 

@@ -14,7 +14,7 @@ function ResetPasswordPage() {
   const onSubmit = async ({ username, code, password }: any) => {
     try {
       await Auth.forgotPasswordSubmit(username, code, password)
-      router.push('/pages/login');
+      router.push('/login');
     } catch (e: any) {
         setError(e.message);
       }
