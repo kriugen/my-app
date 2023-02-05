@@ -116,7 +116,7 @@ const UserDropdown = () => {
           </Box>
         </MenuItem>
         <Divider />
-        <MenuItem sx={{ py: 2 }} onClick={() => { logOut(); handleDropdownClose() }}>
+        <MenuItem data-test='logout' sx={{ py: 2 }} onClick={() => { logOut(); handleDropdownClose() }}>
           <LogoutVariant sx={{ marginRight: 2, fontSize: '1.375rem', color: 'text.secondary' }} />
           Logout
         </MenuItem></div>

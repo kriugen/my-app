@@ -1,5 +1,5 @@
 describe('Login', () => {
-  it.only('clicks Login button and checks login page is loaded', () => {
+  it('clicks Login button and checks login page is loaded', () => {
     cy.visit('/');
     cy.getBySel('avatar').click();
     cy.getBySel('login').click();
@@ -12,7 +12,8 @@ describe('Login', () => {
     cy.getBySel('password').type('1%8Se123');
     cy.getBySel('login-button').click();
 
-    cy.getBySel('appbar-open-settings').should('contain', 'test1');
+    cy.getBySel('avatar').click();
+    cy.getBySel('logout').should('exist');
   });
 
   it('tries to login in non existing user', () => {
