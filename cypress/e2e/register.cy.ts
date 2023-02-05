@@ -5,7 +5,7 @@ describe('SignUp', () => {
     cy.getBySel('password').type('1%8Se123');
     cy.getBySel('email').type('test@gmail.com');
 
-    cy.getBySel('signup-button').click();
+    cy.getBySel('register-button').click();
 
     cy.getBySel('error-alert').should('contain', 'User already exists')
     cy.location('pathname').should('eq', '/register');

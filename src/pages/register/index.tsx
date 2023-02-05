@@ -2,10 +2,10 @@ import { useRouter } from "next/router";
 import { Auth } from "aws-amplify";
 
 import Form from "./RegisterForm";
-import { useErrorContext } from "../../../components/ErrorContextProvider";
-import { useLoadingContext } from "../../../components/LoadingContextProvider";
 import { ReactNode } from "react";
 import BlankLayout from "src/@core/layouts/BlankLayout";
+import { useErrorContext } from "src/components/ErrorContextProvider";
+import { useLoadingContext } from "src/components/LoadingContextProvider";
 
 function RegisterPage() {
   const router = useRouter();
