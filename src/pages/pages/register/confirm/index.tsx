@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { ReactNode, useState } from "react";
 import BlankLayout from "src/@core/layouts/BlankLayout";
 import { useErrorContext } from "src/components/ErrorContextProvider";
-import Form from "./Form";
+import Form from "./RegisterConfirmForm";
 
 function RegisterConfirmPage() {
     const router = useRouter();

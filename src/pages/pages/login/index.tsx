@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { Auth } from "aws-amplify";
 
-import Form from "./Form";
+import Form from "./LoginForm";
 import { ReactNode } from "react";
 import BlankLayout from "src/@core/layouts/BlankLayout";
 

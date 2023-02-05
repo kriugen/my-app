@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { Auth } from "aws-amplify";
 
-import Form from "./Form";
+import Form from "./RegisterForm";
 import { useErrorContext } from "../../../components/ErrorContextProvider";
 import { useLoadingContext } from "../../../components/LoadingContextProvider";
 import { ReactNode } from "react";
