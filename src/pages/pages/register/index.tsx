@@ -16,7 +16,10 @@ function RegisterPage() {
     try {
       setLoading(true);
       await Auth.signUp({username, password, attributes: { email }});
-      router.push('/pages/register/confirm');
+      router.push({
+        pathname: '/pages/register/confirm',
+        query: { username: encodeURIComponent(username), },
+    });
     } catch (e: any) {
       setError(e.message);
     }

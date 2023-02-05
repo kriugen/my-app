@@ -18,15 +18,16 @@ function Page({ referer }: any) {
     try {
       setLoading(true);
       await Auth.signIn(username, password);
-      if (referer) {
-        router.back();
-      } else {
+
+      if (!referer || referer.includes('/register/confirm') ) {
         router.push('/');
+      } else {
+        router.back();
       }
     } catch (e: any) {
         if (e.code == 'UserNotConfirmedException') {
           router.push({
-              pathname: '/signup/confirm',
+              pathname: '/pages/register/confirm',
               query: { username: encodeURIComponent(username), },
           });
         } else {
@@ -35,7 +36,6 @@ function Page({ referer }: any) {
       }
   };
 
-  //return <Form onSubmit={onSubmit} loading={loading} />;
   return <Form onSubmit={ onSubmit } loading={ loading } />;
 }
 

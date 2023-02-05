@@ -16,6 +16,7 @@ function RegisterConfirmPage() {
     const onSubmit = async ({ username, code }: any) => {
       try {
         await Auth.confirmSignUp(username, code);
+        router.push('/pages/login');
       } catch (e: any) {
         setError(e.message);
       }
