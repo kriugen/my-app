@@ -1,10 +1,12 @@
 import { useRouter } from "next/router";
 import { Auth } from "aws-amplify";
 
-import ForgotPassword from "./ForgotPassword";
-import { useErrorContext } from "../ErrorContextProvider";
+import ForgotPassword from "./ForgotPasswordForm";
+import { ReactNode } from "react";
+import BlankLayout from "src/@core/layouts/BlankLayout";
+import { useErrorContext } from "src/components/ErrorContextProvider";
 
-function ForgotPasswordContainer() {
+function ForgotPasswordPage() {
   const router = useRouter();
   const {setError} = useErrorContext();
   
@@ -23,4 +25,6 @@ function ForgotPasswordContainer() {
   return <ForgotPassword onSubmit={onSubmit} />;
 }
 
-export default ForgotPasswordContainer;
+ForgotPasswordPage.getLayout = (page: ReactNode) => <BlankLayout>{page}</BlankLayout>
+
+export default ForgotPasswordPage;
