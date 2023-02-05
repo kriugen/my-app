@@ -57,11 +57,11 @@ function NewPostPage({ auth }: any) {
     return null;
 
   return <Form 
-    post={null} 
-    onSubmit={onSubmit} 
-    imageUrl={null} 
-    setImage={setImage} 
-  />;
+    post={null}
+    onSubmit={onSubmit}
+    imageUrl={null}
+    setImage={setImage}
+  />
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {

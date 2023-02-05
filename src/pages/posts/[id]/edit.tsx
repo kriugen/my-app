@@ -43,8 +43,7 @@ function FormContainer({ post }: any) {
       });
     } catch (e: any) {
       setError(e);
-      
-return null;
+      return null;
     }
 
     return formData.id;

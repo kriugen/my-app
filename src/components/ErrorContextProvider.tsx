@@ -18,6 +18,11 @@ export const ErrorContextProvider = ({ children }: PropsWithChildren) => {
   const [error, setError] = useState(defaultValue.error);
   return (
     <ErrorContext.Provider value={{ error, setError: (error) => {
+      // TODO parse error
+      const errors = e.errors.reduce((acc: any, error: any) => {
+        return acc += error.message; 
+      }, '');
+
       if (error) 
         console.error('AppError', error);
       setError(error);

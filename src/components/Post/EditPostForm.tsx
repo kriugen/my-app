@@ -3,6 +3,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 
 import dynamic from "next/dynamic";
+
 const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
   ssr: false,
 });
@@ -10,6 +11,7 @@ const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
 import "easymde/dist/easymde.min.css";
 import { Box, Button, TextField } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
+import { useState } from "react";
 
 const schema = yup.object({
   title: yup.string().max(128).required(),
@@ -24,6 +26,8 @@ const NewPostForm = ({ post, onSubmit, imageUrl, setImage }: any) => {
     resolver: yupResolver(schema),
     defaultValues: { ...post ?? emptyPost }
   });
+
+  const [src, setSrc] = useState('');
 
   return <Box component="form" 
     sx={{width: 1, m: 3}}
@@ -57,7 +61,7 @@ const NewPostForm = ({ post, onSubmit, imageUrl, setImage }: any) => {
           }}
       />)}
     />
-    {imageUrl && <img src={imageUrl} />}
+    {(src || imageUrl) && <img src={src || imageUrl} />}
     <input
       style={{display: 'none'}}
       id='post-image'
@@ -66,6 +70,7 @@ const NewPostForm = ({ post, onSubmit, imageUrl, setImage }: any) => {
         const fileUploaded = e.target.files[0];
         if (!fileUploaded) return;
         setImage(fileUploaded);
+        setSrc(URL.createObjectURL(fileUploaded));
       }}
     />
     <label htmlFor="post-image">
