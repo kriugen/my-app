@@ -19,7 +19,9 @@ function Page({ referer }: any) {
       setLoading(true);
       await Auth.signIn(username, password);
 
-      if (!referer || referer.includes('/register/confirm') ) {
+      if (!referer 
+          || referer.includes('/register/confirm')
+          || referer.includes('/password/reset') ) {
         router.push('/');
       } else {
         router.back();
