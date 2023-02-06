@@ -1,5 +1,6 @@
 // ** React Imports
 import { ReactNode } from 'react'
+import AddIcon from '@mui/icons-material/Add';
 
 // ** MUI Imports
 import { Theme } from '@mui/material/styles'
@@ -17,6 +18,8 @@ import VerticalAppBarContent from './components/vertical/AppBarContent'
 
 // ** Hook Import
 import { useSettings } from 'src/@core/hooks/useSettings'
+import { Button } from '@mui/material';
+import { useRouter } from 'next/router';
 
 interface Props {
   children: ReactNode
@@ -25,6 +28,7 @@ interface Props {
 const UserLayout = ({ children }: Props) => {
   // ** Hooks
   const { settings, saveSettings } = useSettings()
+  const router = useRouter();
 
   /**
    *  The below variable will hide the current layout menu at given screen size.
@@ -52,6 +56,16 @@ const UserLayout = ({ children }: Props) => {
           toggleNavVisibility={props.toggleNavVisibility}
         />
       )}
+      beforeVerticalNavMenuContent={() => 
+        <Button sx={{ ml: 2 }} 
+          variant="contained" 
+          size="large" 
+          startIcon={<AddIcon />}
+          onClick={() => router.push('/posts/new')}
+        >
+          New Post
+        </Button>
+      }
     >
       {children}
     </VerticalLayout>

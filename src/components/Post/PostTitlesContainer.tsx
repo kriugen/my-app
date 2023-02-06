@@ -1,9 +1,7 @@
 import PostTitles from "./PostTitles";
-import { useRouter } from "next/router";
 
 function PostTitlesContainer({ posts }: any) {
-  const router = useRouter();
-  return <PostTitles posts={posts} onAdd={() => router.push('/posts/new')} />;
+  return <PostTitles posts={posts} />;
 }
 
 export default PostTitlesContainer;
