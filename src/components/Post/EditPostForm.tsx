@@ -60,18 +60,19 @@ const NewPostForm = ({ post, onSubmit, imageUrl, setImage }: any) => {
       />)}
     />
 
-    <ImageUpload src={imageUrl} setImage={setImage} />
-    
-    <LoadingButton
-        loading={false}
-        type="submit"
-        fullWidth
-        variant="contained"
-        sx={{ mt: 3, mb: 2 }}
-        data-test="submit-post"
-      >
-            Submit
-    </LoadingButton>
+    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start' }}>
+      <ImageUpload src={imageUrl} setImage={setImage} />
+      <LoadingButton
+          loading={false}
+          type="submit"
+          variant="contained"
+          fullWidth
+          sx={{ ml: 5 }}
+          data-test="submit-post"
+        >
+              Submit
+      </LoadingButton>
+    </Box>
   </Box>
 };
 
