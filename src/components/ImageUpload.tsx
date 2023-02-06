@@ -10,56 +10,59 @@ export default function ImageUpload({ imageUrl, setImage }: any) {
   return <>
       { 
         src ? <>
-        <label
-          htmlFor="post-image">
-          <Box sx={{ 
-              width: maxWidth, 
-              height: maxHeight, 
-              border: '1px dashed',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center'
-            }}>
-            <Box
-              component="img"
-              sx={{
-                maxWidth,
-                maxHeight
-              }}
-              alt="The house from the offer."
-              src={ src }
-            />
-          </Box>
+          <label
+            htmlFor="post-image">
+            <Box sx={{ 
+                width: maxWidth, 
+                height: maxHeight, 
+                border: '1px dashed',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center'
+              }}>
+              <Box
+                component="img"
+                sx={{
+                  maxWidth,
+                  maxHeight
+                }}
+                alt="The house from the offer."
+                src={ src }
+              />
+            </Box>
           </label>
-          <input
-            style={{display: 'none'}}
-            id='post-image'
-            type='file'
-            onChange={(e: any) => {
-              const fileUploaded = e.target.files[0];
-              if (!fileUploaded) return;
-              setImage(fileUploaded);
-              setSrc(URL.createObjectURL(fileUploaded));
-            }}
+          <ImageInput style={{ display: 'none' }} 
+            setImage={setImage}
+            setSrc={setSrc} 
           />
         </>
-      : <Box>
+      : <>
         <button style={{ 
           border: '1px dashed',
           height: maxHeight,
           width: maxWidth,
           position: 'relative' as const,
         }}>
-          <input
+          <ImageInput style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            opacity: 0,
+          }} 
+            setImage={setImage}
+            setSrc={setSrc} 
+          />
+        </button>
+      </> }
+  </>
+}
+
+function ImageInput({ style, setImage, setSrc }: any) {
+  return <input
             id='post-image'
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100%',
-              opacity: 0,
-            }}
+            style={style}
             type='file'
             onChange={(e: any) => {
               const fileUploaded = e.target.files[0];
@@ -68,7 +71,4 @@ export default function ImageUpload({ imageUrl, setImage }: any) {
               setSrc(URL.createObjectURL(fileUploaded));
             }}
           />
-        </button>
-      </Box> }
-  </>
 }
