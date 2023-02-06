@@ -6,32 +6,42 @@ export default function ImageUpload({ imageUrl, setImage }: any) {
 
   return <>
       { 
-        src && <Box
-          component="img"
-          sx={{
-            maxWidth: 200,
-            maxHeight: 150
+        src ? <Box>
+        <label htmlFor="post-image">
+          <Box
+            component="img"
+            sx={{
+              maxWidth: 200,
+              maxHeight: 150
+            }}
+            alt="The house from the offer."
+            src={ src }
+          />
+          </label>
+          <input
+            style={{display: 'none'}}
+            id='post-image'
+            type='file'
+            onChange={(e: any) => {
+              const fileUploaded = e.target.files[0];
+              if (!fileUploaded) return;
+              setImage(fileUploaded);
+              setSrc(URL.createObjectURL(fileUploaded));
+            }}
+          />
+        </Box>
+      : <Box>
+        <input
+          id='post-image'
+          type='file'
+          onChange={(e: any) => {
+            const fileUploaded = e.target.files[0];
+            if (!fileUploaded) return;
+            setImage(fileUploaded);
+            setSrc(URL.createObjectURL(fileUploaded));
           }}
-          alt="The house from the offer."
-          src={ src }
         />
-      }
-      <input
-      style={{display: 'none'}}
-      id='post-image'
-      type='file'
-      onChange={(e: any) => {
-        const fileUploaded = e.target.files[0];
-        if (!fileUploaded) return;
-        setImage(fileUploaded);
-        setSrc(URL.createObjectURL(fileUploaded));
-      }}
-    />
-    <label htmlFor="post-image">
-      <Button variant="outlined" component="span">
-        Upload
-      </Button>
-    </label>
+      </Box> }
   </>
 
   // {(src || imageUrl) ?
