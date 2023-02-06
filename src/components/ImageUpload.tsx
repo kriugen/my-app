@@ -16,6 +16,7 @@ export default function ImageUpload({
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
+      position: 'relative'
       }}
     >
       { src && 
