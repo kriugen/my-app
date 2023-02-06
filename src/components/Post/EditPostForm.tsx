@@ -21,10 +21,10 @@ const schema = yup.object({
 export type FormValue = yup.InferType<typeof schema>
 const emptyPost = { title: '', content: ''};
 
-const NewPostForm = ({ post, onSubmit, imageUrl, setImage }: any) => {
+const EditPostForm = ({ post, onSubmit, imageUrl, setImage }: any) => {
   const { register, control, handleSubmit, formState: { errors } } = useForm<FormValue>({
     resolver: yupResolver(schema),
-    defaultValues: { ...post ?? emptyPost }
+    defaultValues: { ...post ?? emptyPost },
   });
 
   return <Box component="form" 
@@ -59,9 +59,8 @@ const NewPostForm = ({ post, onSubmit, imageUrl, setImage }: any) => {
           }}
       />)}
     />
-
     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start' }}>
-      <ImageUpload src={imageUrl} setImage={setImage} />
+      <ImageUpload imageUrl={imageUrl} setImage={setImage} />
       <LoadingButton
           loading={false}
           type="submit"
@@ -76,4 +75,4 @@ const NewPostForm = ({ post, onSubmit, imageUrl, setImage }: any) => {
   </Box>
 };
 
-export default NewPostForm;
+export default EditPostForm;

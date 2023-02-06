@@ -7,7 +7,6 @@ import { useAuthContext } from "../AuthContextProvider";
 
 export default function ViewPost({ post, imageUrl, onEdit, onDelete }: any) {
   const { user } = useAuthContext();
-  console.log('IMAGEURL', imageUrl)
   return <Card>
     <Box sx={{ display: 'flex', alignItems: 'center' }}>
       <CardMedia

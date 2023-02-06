@@ -1,12 +1,16 @@
 import { Box } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function ImageUpload({ 
   maxHeight = 150, 
   maxWidth = 200, 
   imageUrl, setImage 
 }: any) {
-  const [src, setSrc] = useState(imageUrl);
+  const [src, setSrc] = useState('');
+
+  useEffect(() => {
+    setSrc(imageUrl);
+  }, [imageUrl]);
 
   return (
     <Box sx={{
