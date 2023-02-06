@@ -7,11 +7,12 @@ import { CardActionArea } from '@mui/material';
 
 export default function PostTitle({ post, imageUrl, onClick }: any) {
   return (
-    <Card sx={{ m: 1 }}>
+    <Card sx={{ m: 1, height: 140, width: { xs: '100%', sm:400 }}}>
       <CardActionArea sx={{display: 'flex'}} onClick={ onClick }>
         { imageUrl &&
           <CardMedia
-            sx={{ maxWidth: 200, minHeight: 140 }}
+            height="140"
+            sx={{ objectFit: "contain" }}
             component="img"
             image={ imageUrl }
             alt="post image"
