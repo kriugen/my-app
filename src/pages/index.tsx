@@ -11,11 +11,7 @@ import HomeComponent from '../components/HomeComponent';
 const Dashboard = ({ posts }: any) => {
   return (
     <ApexChartWrapper>
-      <Grid container spacing={6}>
-        <Grid item xs={12} md={4}>
-          <HomeComponent posts={ posts } />
-        </Grid>
-      </Grid>
+      <HomeComponent posts={ posts } />
     </ApexChartWrapper>
   )
 }

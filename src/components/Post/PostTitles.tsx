@@ -4,10 +4,14 @@ import AddIcon from '@mui/icons-material/Add';
 import PostTitleContainer from "./PostTitleContainer";
 
 const PostTitles = ({ posts, onAdd }: any) => {
-  return <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+  return <Box id='post-titles' 
+    sx={{ display: 'flex', 
+      flexDirection: 'column', 
+      alignItems: 'center',
+      width: '100%' }}>
       <Fab sx={{ 
-        position: 'absolute', 
-        bottom: 16, 
+        position: 'fixed', 
+        bottom: 116, 
         right: 16 }} 
         onClick={onAdd} 
         color="primary" 
@@ -19,7 +23,7 @@ const PostTitles = ({ posts, onAdd }: any) => {
         ? posts.map((item: any) => (<PostTitleContainer post={item} key={item.id} />)) 
         : <div>No Posts</div>
     }
-  </Box>;
+  </Box>
 }
 
 export default PostTitles;
