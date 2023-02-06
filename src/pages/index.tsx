@@ -13,7 +13,7 @@ const Dashboard = ({ posts }: any) => {
     <ApexChartWrapper>
       <Grid container spacing={6}>
         <Grid item xs={12} md={4}>
-          <HomeComponent posts={ posts } />;
+          <HomeComponent posts={ posts } />
         </Grid>
       </Grid>
     </ApexChartWrapper>
