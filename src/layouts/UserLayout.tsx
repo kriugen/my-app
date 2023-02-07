@@ -56,12 +56,15 @@ const UserLayout = ({ children }: Props) => {
           toggleNavVisibility={props.toggleNavVisibility}
         />
       )}
-      beforeVerticalNavMenuContent={() => 
+      beforeVerticalNavMenuContent={(props) => 
         <Button sx={{ ml: 2 }} 
           variant="contained" 
           size="large" 
           startIcon={<AddIcon />}
-          onClick={() => router.push('/posts/new')}
+          onClick={() => { 
+            router.push('/posts/new');
+            props.setNavVisible(false) 
+          }}
         >
           New Post
         </Button>
