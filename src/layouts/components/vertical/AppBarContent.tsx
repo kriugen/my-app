@@ -17,7 +17,7 @@ import { Settings } from 'src/@core/context/settingsContext'
 import ModeToggler from 'src/@core/layouts/components/shared-components/ModeToggler'
 import UserDropdown from 'src/@core/layouts/components/shared-components/UserDropdown'
 import { useRouter } from 'next/router'
-import { AnyAaaaRecord } from 'dns'
+import { useEffect, useState } from 'react'
 
 interface Props {
   hidden: boolean
@@ -28,6 +28,16 @@ interface Props {
 
 const AppBarContent = (props: Props) => {
   const router = useRouter();
+  console.log('ROUTER', router.query)
+
+  useEffect(() => {
+    if (router.query && router.query.search) {
+      const querySearch: any = router.query.search;
+       setSearch(querySearch);
+    }
+  }, [router.query]);
+
+  const [search, setSearch] = useState('');
 
   // ** Props
   const { hidden, settings, saveSettings, toggleNavVisibility } = props
@@ -67,6 +77,8 @@ const AppBarContent = (props: Props) => {
                 </InputAdornment>
               )
             }}
+            value={search}
+            onChange={(e: any) => setSearch(e.target.value)}
           />
           <input type="submit" hidden />
         </form>
