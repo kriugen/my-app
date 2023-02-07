@@ -42,7 +42,8 @@
     "export": "next export",
     "lint": "eslint --fix \"src/**/*.{js,jsx,ts,tsx}\"",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
-    "cypress": "cypress open"
+    "cypress": "cypress open",
+    "test:populate": "ts-node ./test/main.ts"
   },
   "dependencies": {
     "@aws-amplify/ui-react": "^4.3.2",

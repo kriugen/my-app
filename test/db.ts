@@ -2,7 +2,7 @@ import { init as initDb } from "./aws/dynamo";
 import { listUsers, init as initAuth } from "./aws/cognito";
 import { addPost, deletePostsByTitle, init as initPosts } from "./posts";
 
-let { username, region, userPoolId } = require('../cypress.env.json');
+import { username, region, userPoolId } from '../cypress.env.json';
 
 export async function init() {
   console.log('[init]', region, new Date().toLocaleTimeString());
@@ -12,7 +12,7 @@ export async function init() {
   await initPosts();
 }
 
-async function getFullUsername(username: string) {
+export async function getFullUsername(username: string) {
   const data = await listUsers({ userPoolId });
   for (let i = 0; i < data.Users.length; ++i) {
     const user = data.Users[i];
