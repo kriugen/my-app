@@ -16,9 +16,8 @@ import { Settings } from 'src/@core/context/settingsContext'
 // ** Components
 import ModeToggler from 'src/@core/layouts/components/shared-components/ModeToggler'
 import UserDropdown from 'src/@core/layouts/components/shared-components/UserDropdown'
-import NotificationDropdown from 'src/@core/layouts/components/shared-components/NotificationDropdown'
-import { Button } from '@mui/material'
-import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { AnyAaaaRecord } from 'dns'
 
 interface Props {
   hidden: boolean
@@ -28,6 +27,8 @@ interface Props {
 }
 
 const AppBarContent = (props: Props) => {
+  const router = useRouter();
+
   // ** Props
   const { hidden, settings, saveSettings, toggleNavVisibility } = props
 
@@ -46,17 +47,29 @@ const AppBarContent = (props: Props) => {
             <Menu />
           </IconButton>
         ) : null}
-        <TextField
-          size='small'
-          sx={{ '& .MuiOutlinedInput-root': { borderRadius: 4 } }}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position='start'>
-                <Magnify fontSize='small' />
-              </InputAdornment>
-            )
-          }}
-        />
+        <form onSubmit={(e: any) => 
+          { 
+            e.preventDefault();
+            
+            const formData: any = new FormData(e.target);
+            const params = new URLSearchParams(formData);
+
+            router.push('/?' + params);
+          }}>
+          <TextField
+            name='search'
+            size='small'
+            sx={{ '& .MuiOutlinedInput-root': { borderRadius: 4 } }}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position='start'>
+                  <Magnify fontSize='small' />
+                </InputAdornment>
+              )
+            }}
+          />
+          <input type="submit" hidden />
+        </form>
       </Box>
       <Box className='actions-right' sx={{ display: 'flex', alignItems: 'center' }}>
         <ModeToggler settings={settings} saveSettings={saveSettings} />

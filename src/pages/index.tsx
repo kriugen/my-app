@@ -1,6 +1,3 @@
-// ** MUI Imports
-import Grid from '@mui/material/Grid'
-
 import ApexChartWrapper from 'src/@core/styles/libs/react-apexcharts'
 
 import { listPosts } from 'src/graphql/queries'
@@ -16,9 +13,14 @@ const Dashboard = ({ posts }: any) => {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async ({ query }: any) => {
   const postData: any = await API.graphql({
     query: listPosts,
+    variables: { filter: { 
+      title: {
+        contains: query.search
+      }
+    }}
   });
 
   return {
