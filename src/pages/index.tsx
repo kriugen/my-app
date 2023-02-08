@@ -14,7 +14,7 @@ const Dashboard = ({ posts }: any) => {
 export const getServerSideProps: GetServerSideProps = async ({ query }: any) => {
   return {
     props: {
-      search: query.search,
+      search: query.search ?? '',
     },
   };
 }

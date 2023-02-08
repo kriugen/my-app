@@ -5,7 +5,10 @@ import { listPosts } from "src/graphql/queries";
 import PostTitles from "./PostTitles";
 
 function PostTitlesContainer({ search }: any) {
-  const [posts, setPosts] = useState<any>();
+  const [posts, setPosts] = useState<any>([]);
+  const [token, setToken] = useState<any>(null);
+  const [nextToken, setNextToken] = useState<any>(null);
+
   useEffect(() => {
     const loadPosts = async () => {
       const postData: any = await API.graphql({
@@ -15,19 +18,21 @@ function PostTitlesContainer({ search }: any) {
             contains: search
           }
         },
-          limit: 2
+          limit: 2,
+          nextToken: token,
         }
       });
 
-      setPosts(postData.data.listPosts);
+      setPosts((posts: any) => [...posts, ...postData.data.listPosts.items]);
+      setNextToken(postData.data.listPosts.nextToken);
     }
 
     loadPosts();
-  }, [search]);
+  }, [search, token]);
 
   return <>
-    <PostTitles posts={posts?.items} />
-    <Button onClick={() => alert('moar')}>Load More</Button>
+    <PostTitles posts={posts} />
+    <Button onClick={() => setToken(nextToken)}>Load More</Button>
   </>;
 }
 
