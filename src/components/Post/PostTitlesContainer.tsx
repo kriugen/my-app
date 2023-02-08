@@ -8,23 +8,38 @@ function PostTitlesContainer({ search }: any) {
   const [posts, setPosts] = useState<any>([]);
   const [token, setToken] = useState<any>(null);
   const [nextToken, setNextToken] = useState<any>(null);
+  const [isFetching, setIsFetching] = useState(false);
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [handleScroll]);
+
+  function handleScroll() {
+    if (Math.floor(window.innerHeight + document.documentElement.scrollTop) !== document.documentElement.offsetHeight || isFetching) return;
+    setIsFetching(true);
+    console.log('handleScroll setToken', nextToken)
+    setToken(nextToken);
+  }
 
   useEffect(() => {
     const loadPosts = async () => {
       const postData: any = await API.graphql({
         query: listPosts,
-        variables: { filter: { 
+        variables: { filter: {
           title: {
             contains: search
           }
         },
-          limit: 2,
+          limit: 5,
           nextToken: token,
         }
       });
 
       setPosts((posts: any) => [...posts, ...postData.data.listPosts.items]);
       setNextToken(postData.data.listPosts.nextToken);
+      console.log('nextToken arrived', postData.data.listPosts.nextToken)
+      setIsFetching(false)
     }
 
     loadPosts();
