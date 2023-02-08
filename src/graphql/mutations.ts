@@ -13,6 +13,7 @@ export const createPost = /* GraphQL */ `
       content
       username
       coverImage
+      published
       createdAt
       updatedAt
     }
@@ -29,6 +30,7 @@ export const updatePost = /* GraphQL */ `
       content
       username
       coverImage
+      published
       createdAt
       updatedAt
     }
@@ -45,6 +47,7 @@ export const deletePost = /* GraphQL */ `
       content
       username
       coverImage
+      published
       createdAt
       updatedAt
     }

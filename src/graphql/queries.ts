@@ -10,6 +10,7 @@ export const getPost = /* GraphQL */ `
       content
       username
       coverImage
+      published
       createdAt
       updatedAt
     }
@@ -28,6 +29,7 @@ export const listPosts = /* GraphQL */ `
         content
         username
         coverImage
+        published
         createdAt
         updatedAt
       }
@@ -56,6 +58,7 @@ export const postsByTitle = /* GraphQL */ `
         content
         username
         coverImage
+        published
         createdAt
         updatedAt
       }
@@ -84,6 +87,38 @@ export const postsByUsername = /* GraphQL */ `
         content
         username
         coverImage
+        published
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const postsByPublishedAndTitle = /* GraphQL */ `
+  query PostsByPublishedAndTitle(
+    $published: Int!
+    $title: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelPostFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    postsByPublishedAndTitle(
+      published: $published
+      title: $title
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        title
+        content
+        username
+        coverImage
+        published
         createdAt
         updatedAt
       }

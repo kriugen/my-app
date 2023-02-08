@@ -16,6 +16,7 @@ export async function addPost(post: any) {
       title: { S: post.title },
       content: { S: post.content },
       username: { S: post.username },
+      published: { N: post.published.toString() },
 
       __typename: { S: 'Post' }, 
       createdAt: { S: now },

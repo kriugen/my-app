@@ -7,11 +7,13 @@ export async function populatePosts() {
   const fullUsername = await getFullUsername(username);
   console.log('[populate posts]', username, fullUsername);
 
-  for (let i = 5; i < 20; ++i) {
+  for (let i = 1; i < 5; ++i) {
+    const num = i.toString().padStart(2, '0');
     await addPost({
-      title: 'post ' + i, 
-      content: 'post test content ' + i, 
+      title: 'post ' + num, 
+      content: 'post test content ' + num, 
       username: fullUsername,
+      published: 1,
     });
   }
 }

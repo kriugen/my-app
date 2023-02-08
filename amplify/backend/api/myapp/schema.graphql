@@ -10,5 +10,7 @@ type Post @model
   username: String 
     @index(name: "postsByUsername", 
       queryField: "postsByUsername")
-  coverImage: String
+  coverImage: String,
+  published: Int
+    @index(sortKeyFields: ["title"])
 }
