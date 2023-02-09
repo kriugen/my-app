@@ -1,6 +1,6 @@
 import { API } from "aws-amplify";
-import { useEffect, useState } from "react";
-import { listPosts, postsByPublishedAndTitle } from "src/graphql/queries";
+import { useCallback, useEffect, useState } from "react";
+import { listPosts } from "src/graphql/queries";
 import { useErrorContext } from "../ErrorContextProvider";
 import PostTitles from "./PostTitles";
 
@@ -12,37 +12,34 @@ function PostTitlesContainer({ search }: any) {
   const [isFetching, setIsFetching] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
 
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [handleScroll]);
-
-  function handleScroll() {
+  const handleScroll = useCallback(() => {
     if (Math.floor(window.innerHeight + document.documentElement.scrollTop) 
       !== document.documentElement.offsetHeight || isFetching || isComplete) 
         return;
     
     setIsFetching(true);
-    console.log('handleScroll setToken', nextToken)
     setToken(nextToken);
-  }
+  }, [isFetching, isComplete, nextToken]);
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [handleScroll]);
 
   useEffect(() => {
     const loadPosts = async () => {
       try {
         const postData: any = await API.graphql({
-          query: postsByPublishedAndTitle,
+          query: listPosts,
           variables: { 
-          //   filter: {
-          //   title: {
-          //     contains: search
-          //   },
-          // },
-            published: 1,
-            limit: 5,
-            nextToken: token,
-          }
-        });
+            filter: {
+            title: {
+              contains: search
+            },
+          },
+          limit: 5,
+          nextToken: token 
+        }});
 
         const handleResult = (postsResult: any) => {
           setPosts((posts: any) => [...posts, ...postsResult.items]);
@@ -51,13 +48,9 @@ function PostTitlesContainer({ search }: any) {
           if (postsResult.nextToken == null) {
             setIsComplete(true);
           }
-
-          console.log('nextToken arrived', postsResult.nextToken);
         }
 
-        handleResult(postData.data.postsByPublishedAndTitle);
-
-        //handleResult(postData.data.listPosts);
+        handleResult(postData.data.listPosts);
         setIsFetching(false);
       } catch (e) {
         setError(e);
@@ -65,7 +58,7 @@ function PostTitlesContainer({ search }: any) {
     }
 
     loadPosts();
-  }, [search, token]);
+  }, [search, token, setError]);
 
   return <>
     <PostTitles posts={posts} />
