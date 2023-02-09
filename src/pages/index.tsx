@@ -3,10 +3,10 @@ import ApexChartWrapper from 'src/@core/styles/libs/react-apexcharts'
 import { GetServerSideProps } from 'next'
 import PostTitlesContainer from 'src/components/Post/PostTitlesContainer';
 
-const Dashboard = ({ posts }: any) => {
+const Dashboard = ({ search }: any) => {
   return (
     <ApexChartWrapper>
-      <PostTitlesContainer posts={ posts } />
+      <PostTitlesContainer search={ search } />
     </ApexChartWrapper>
   )
 }
