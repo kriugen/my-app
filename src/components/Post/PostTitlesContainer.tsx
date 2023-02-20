@@ -47,7 +47,12 @@ function PostTitlesContainer({ search }: any) {
         }});
 
         const handleResult = (postsResult: any) => {
-          setPosts((posts: any) => [...posts, ...postsResult.items]);
+          if (token) {
+            setPosts((posts: any) => [...posts, ...postsResult.items]);
+          } else {
+            setPosts(postsResult.items);
+          }
+
           setNextToken(postsResult.nextToken);
 
           if (postsResult.nextToken == null) {
