@@ -1,11 +1,14 @@
+import { Box, CircularProgress } from "@mui/material";
 import { API } from "aws-amplify";
 import { useCallback, useEffect, useState } from "react";
 import { listPosts } from "src/graphql/queries";
 import { useErrorContext } from "../ErrorContextProvider";
+import { useLoadingContext } from "../LoadingContextProvider";
 import PostTitles from "./PostTitles";
 
 function PostTitlesContainer({ search }: any) {
   const { setError } = useErrorContext();
+  const { setLoading } = useLoadingContext();
   const [posts, setPosts] = useState<any>([]);
   const [token, setToken] = useState<any>(null);
   const [nextToken, setNextToken] = useState<any>(null);
@@ -29,6 +32,8 @@ function PostTitlesContainer({ search }: any) {
   useEffect(() => {
     const loadPosts = async () => {
       try {
+        setIsFetching(true);
+        setLoading(true);
         const postData: any = await API.graphql({
           query: listPosts,
           variables: { 
@@ -52,17 +57,21 @@ function PostTitlesContainer({ search }: any) {
 
         handleResult(postData.data.listPosts);
         setIsFetching(false);
+        setLoading(false);
       } catch (e) {
+        setLoading(false);
         setError(e);
       }
     }
 
     loadPosts();
-  }, [search, token, setError]);
+  }, [search, token, setError, setLoading]);
 
-  return <>
-    <PostTitles posts={posts} />
-  </>;
+  return (posts && posts.length > 0)
+    ? <PostTitles posts={posts} /> 
+    : <Box sx={{display: 'flex', justifyContent: 'center'}}>
+        <CircularProgress />
+      </Box> 
 }
 
 export default PostTitlesContainer;
