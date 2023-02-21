@@ -4,6 +4,7 @@ import { Box, Button,
   Typography } from "@mui/material";
 import ReactMarkDown from "react-markdown";
 import { useAuthContext } from "../AuthContextProvider";
+import EditCommentForm from "./EditCommentForm";
 
 export default function ViewPost({ post, imageUrl, onEdit, onDelete }: any) {
   const { user } = useAuthContext();
@@ -22,8 +23,7 @@ export default function ViewPost({ post, imageUrl, onEdit, onDelete }: any) {
     </Box>
     <CardContent sx={{ pt: 0 }}>
       <Typography variant="body2" color="text.secondary">
-        {/* <ReactMarkDown className='prose'>{post.content ?? ''}</ReactMarkDown> */}
-        {post.content ?? ''}
+        <ReactMarkDown className='prose'>{post.content ?? ''}</ReactMarkDown>
       </Typography>
     </CardContent>
     { user?.username == post.username &&
@@ -31,5 +31,6 @@ export default function ViewPost({ post, imageUrl, onEdit, onDelete }: any) {
       <Button onClick={onEdit}>Edit</Button>
       <Button onClick={onDelete}>Delete</Button>
     </CardActions> }
+    <EditCommentForm />
   </Card>
 }
