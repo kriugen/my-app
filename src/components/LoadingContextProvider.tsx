@@ -16,18 +16,12 @@ const defaultValue = {
 }
 
 const LoadingContext = createContext<ContextType>(defaultValue);
-export const LoadingContextProvider = ({ children }: PropsWithChildren) => {
+export const LoadingContextProvider = ({ children }: any) => {
   const [loading, setLoading] = useState(defaultValue.loading);
 
   const router = useRouter();
   useEffect(() => {
-    const handleRouteChange = (url: string) => {
-      console.log(
-        `App is changing to ${url}`
-      )
-      setLoading(false);
-    }
-
+    const handleRouteChange = () => setLoading(false);
     router.events.on('routeChangeComplete', handleRouteChange)
     
 return () => {

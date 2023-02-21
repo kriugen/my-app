@@ -28,8 +28,6 @@ interface Props {
 
 const AppBarContent = (props: Props) => {
   const router = useRouter();
-  console.log('ROUTER', router.query)
-
   useEffect(() => {
     if (router.query && router.query.search) {
       const querySearch: any = router.query.search;

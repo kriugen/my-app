@@ -7,11 +7,9 @@ import { useAuthContext } from "../AuthContextProvider";
 
 export default function ViewPost({ post, imageUrl, onEdit, onDelete }: any) {
   const { user } = useAuthContext();
-  console.log(post.title, imageUrl)
-
   return <Card>
     <Box sx={{ display: 'flex', p: 5, alignItems: 'center' }}>
-    { 
+    {
       imageUrl && <CardMedia
         component="img"
         image={ imageUrl }
@@ -24,7 +22,8 @@ export default function ViewPost({ post, imageUrl, onEdit, onDelete }: any) {
     </Box>
     <CardContent sx={{ pt: 0 }}>
       <Typography variant="body2" color="text.secondary">
-        <ReactMarkDown className='prose'>{post.content ?? ''}</ReactMarkDown>
+        {/* <ReactMarkDown className='prose'>{post.content ?? ''}</ReactMarkDown> */}
+        {post.content ?? ''}
       </Typography>
     </CardContent>
     { user?.username == post.username &&
