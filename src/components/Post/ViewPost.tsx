@@ -4,6 +4,7 @@ import { Box, Button,
   Typography } from "@mui/material";
 import ReactMarkDown from "react-markdown";
 import { useAuthContext } from "../AuthContextProvider";
+import Comments from "./Comments";
 import EditCommentForm from "./EditCommentForm";
 
 export default function ViewPost({ post, imageUrl, onEdit, onDelete }: any) {
@@ -31,6 +32,7 @@ export default function ViewPost({ post, imageUrl, onEdit, onDelete }: any) {
       <Button onClick={onEdit}>Edit</Button>
       <Button onClick={onDelete}>Delete</Button>
     </CardActions> }
+    <Comments post={post} />
     <EditCommentForm />
   </Card>
 }

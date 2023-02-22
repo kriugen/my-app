@@ -5,14 +5,13 @@ import { useImageUrl } from "../../../hooks";
 import { useErrorContext } from "../../../components/ErrorContextProvider";
 
 import ViewPost from "../../../components/Post/ViewPost";
-import { getPost } from "src/graphql/queries";
 import { GetServerSideProps } from "next";
 
 export default function ViewPostContainer({ post }: any) {
   const router = useRouter();
   const { setError } = useErrorContext();
   const imageUrl = useImageUrl(post);
-  
+
   const onEdit = () => {
     router.push(`/posts/${post.id}/edit`);
   }
@@ -44,6 +43,27 @@ return null;
     onDelete={onDelete}
   />;
 }
+
+const getPost = /* GraphQL */ `
+  query GetPost($id: ID!) {
+    getPost(id: $id) {
+      id
+      title
+      content
+      username
+      coverImage
+      published
+      comments {
+        items {
+          message
+          id
+        }
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
 
 export const getServerSideProps: GetServerSideProps = async ({ params }: any) => {
   const { id } = params;
