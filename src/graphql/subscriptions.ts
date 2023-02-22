@@ -14,6 +14,9 @@ export const onCreatePost = /* GraphQL */ `
       username
       coverImage
       published
+      comments {
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -31,6 +34,9 @@ export const onUpdatePost = /* GraphQL */ `
       username
       coverImage
       published
+      comments {
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -48,8 +54,86 @@ export const onDeletePost = /* GraphQL */ `
       username
       coverImage
       published
+      comments {
+        nextToken
+      }
       createdAt
       updatedAt
+    }
+  }
+`;
+export const onCreateComment = /* GraphQL */ `
+  subscription OnCreateComment(
+    $filter: ModelSubscriptionCommentFilterInput
+    $createdBy: String
+  ) {
+    onCreateComment(filter: $filter, createdBy: $createdBy) {
+      id
+      message
+      post {
+        id
+        title
+        content
+        username
+        coverImage
+        published
+        createdAt
+        updatedAt
+      }
+      postID
+      createdAt
+      updatedAt
+      createdBy
+    }
+  }
+`;
+export const onUpdateComment = /* GraphQL */ `
+  subscription OnUpdateComment(
+    $filter: ModelSubscriptionCommentFilterInput
+    $createdBy: String
+  ) {
+    onUpdateComment(filter: $filter, createdBy: $createdBy) {
+      id
+      message
+      post {
+        id
+        title
+        content
+        username
+        coverImage
+        published
+        createdAt
+        updatedAt
+      }
+      postID
+      createdAt
+      updatedAt
+      createdBy
+    }
+  }
+`;
+export const onDeleteComment = /* GraphQL */ `
+  subscription OnDeleteComment(
+    $filter: ModelSubscriptionCommentFilterInput
+    $createdBy: String
+  ) {
+    onDeleteComment(filter: $filter, createdBy: $createdBy) {
+      id
+      message
+      post {
+        id
+        title
+        content
+        username
+        coverImage
+        published
+        createdAt
+        updatedAt
+      }
+      postID
+      createdAt
+      updatedAt
+      createdBy
     }
   }
 `;
