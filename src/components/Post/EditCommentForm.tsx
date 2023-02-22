@@ -36,6 +36,7 @@ const EditCommentForm = ({ comment, onSubmit }: any) => {
         field: { onChange, value },
       }) => (
         <SimpleMDE
+          options={{maxHeight: '100px'}}
           value={value}
           onChange={(value: any) => {
             onChange(value);

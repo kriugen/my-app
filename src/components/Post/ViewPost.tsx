@@ -32,7 +32,7 @@ export default function ViewPost({ post, imageUrl, onEdit, onDelete }: any) {
       <Button onClick={onEdit}>Edit</Button>
       <Button onClick={onDelete}>Delete</Button>
     </CardActions> }
-    <Comments post={post} />
     <EditCommentForm />
+    <Comments post={post} />
   </Card>
 }
