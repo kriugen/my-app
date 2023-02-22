@@ -1,15 +1,12 @@
-import { List, ListItem, ListItemText } from "@mui/material";
+import { Box } from "@mui/material";
 
 const Comments = ({ post }: any) => {
-  console.log('+++POST', post);
-  console.log('+++POST Comments', post?.comments);
-  console.log('+++POST Comments Items', post?.comments?.items);
-
-  return <List>{post?.comments?.items.map((c: any) => 
-    <ListItem key={c.id}>
-        <ListItemText>{c.message}</ListItemText>
-    </ListItem>)}
-  </List>;
+  console.log('POST+++', post)
+  return post?.comments?.items.map((c: any) => 
+    <Box key={c.id}>
+        {c.createdBy}&nbsp;{c.createdAt}
+        <Box>{c.message}</Box>
+    </Box>)
 };
 
 export default Comments;

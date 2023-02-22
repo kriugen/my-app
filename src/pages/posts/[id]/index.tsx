@@ -57,6 +57,8 @@ const getPost = /* GraphQL */ `
         items {
           message
           id
+          createdBy
+          createdAt
         }
       }
       createdAt
