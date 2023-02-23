@@ -67,6 +67,7 @@ export default function ViewPost({ post, imageUrl, onEdit, onDelete }: any) {
 
     if (id) {
       setShowCommentForm(false);
+      setComment(undefined);
       router.push(`/posts/${post.id}`);
     }
   };
@@ -91,9 +92,8 @@ export default function ViewPost({ post, imageUrl, onEdit, onDelete }: any) {
     </CardContent>
     {user?.username == post.username &&
       <CardActions sx={{ justifyContent: 'end' }}>
-        {showCommentForm ?
-          <Button sx={{ mr: 'auto' }} onClick={() => setShowCommentForm(false)}>Hide</Button>
-          : <Button sx={{ mr: 'auto' }} onClick={() => setShowCommentForm(true)}>Add Comment</Button>
+        {!showCommentForm &&
+          <Button sx={{ mr: 'auto' }} onClick={() => setShowCommentForm(true)}>Add Comment</Button>
         }
         <Button onClick={onEdit}>Edit</Button>
         <Button onClick={onDelete}>Delete</Button>
@@ -101,7 +101,7 @@ export default function ViewPost({ post, imageUrl, onEdit, onDelete }: any) {
     {showCommentForm && <EditCommentForm
       comment={comment}
       onSubmit={onSubmit}
-      onReset={() => setComment(undefined)}
+      onReset={() => { setComment(undefined); setShowCommentForm(false) }}
     />}
     <hr />
     <Box sx={{ m: 4 }}>

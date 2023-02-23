@@ -32,7 +32,6 @@ const EditCommentForm = ({ comment, onSubmit, onReset }: any) => {
 
   const formSubmit = (data: any) => {
     onSubmit(data);
-    reset();
   }
 
   return <Box component="form"
