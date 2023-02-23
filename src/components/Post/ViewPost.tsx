@@ -14,6 +14,7 @@ import { API } from "aws-amplify";
 import { createComment } from "src/graphql/mutations";
 import { useErrorContext } from "../ErrorContextProvider";
 import { useState } from "react";
+import ButtonRight from "../ButtonRight";
 
 export default function ViewPost({ post, imageUrl, onEdit, onDelete }: any) {
   const { user } = useAuthContext();
@@ -77,14 +78,10 @@ export default function ViewPost({ post, imageUrl, onEdit, onDelete }: any) {
     <hr />
     {showCommentForm ?
       <>
-        <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-          <Button onClick={() => { setShowCommentForm(false); }}>Hide</Button>
-        </Box>
+        <ButtonRight onClick={() => setShowCommentForm(false)}>Hide</ButtonRight>
         <EditCommentForm onSubmit={onSubmit} />
       </>
-      : <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-        <Button sx={{ float: 'right' }} onClick={() => setShowCommentForm(true)}>Add Comment</Button>
-      </Box>
+      : <ButtonRight onClick={() => setShowCommentForm(true)}>Add Comment</ButtonRight>
     }
     <hr style={{ clear: 'both' }} />
     <Comments post={post} />
