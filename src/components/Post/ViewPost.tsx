@@ -11,7 +11,7 @@ import Comments from "./Comments";
 import EditCommentForm from "./EditCommentForm";
 import { v4 as uuid } from "uuid";
 import { API } from "aws-amplify";
-import { createComment } from "src/graphql/mutations";
+import { createComment, updateComment } from "src/graphql/mutations";
 import { useErrorContext } from "../ErrorContextProvider";
 import { useState } from "react";
 
@@ -20,9 +20,9 @@ export default function ViewPost({ post, imageUrl, onEdit, onDelete }: any) {
   const router = useRouter();
   const { setError } = useErrorContext();
   const [showCommentForm, setShowCommentForm] = useState(false);
+  const [comment, setComment] = useState();
 
   const onSubmit = async (formData: any) => {
-
     const newComment = async (formData: any) => {
       const id = uuid();
       formData.id = id;
@@ -44,7 +44,27 @@ export default function ViewPost({ post, imageUrl, onEdit, onDelete }: any) {
       return id;
     }
 
-    const id = await newComment(formData);
+    const editComment = async (formData: any) => {
+      const commentUpdated = (({ id, message }: any) => ({ id, message }))(formData);
+
+      try {
+        await API.graphql({
+          query: updateComment,
+          variables: { input: commentUpdated },
+          authMode: "AMAZON_COGNITO_USER_POOLS",
+        });
+      } catch (e: any) {
+        setError(e);
+        return null;
+      }
+
+      return formData.id;
+    }
+
+    const id = formData.id
+      ? await editComment(formData)
+      : await newComment(formData);
+
     if (id) {
       setShowCommentForm(false);
       router.push(`/posts/${post.id}`);
@@ -78,10 +98,13 @@ export default function ViewPost({ post, imageUrl, onEdit, onDelete }: any) {
         <Button onClick={onEdit}>Edit</Button>
         <Button onClick={onDelete}>Delete</Button>
       </CardActions>}
-    {showCommentForm && <EditCommentForm onHide={() => setShowCommentForm(false)} onSubmit={onSubmit} />}
+    {showCommentForm && <EditCommentForm
+      comment={comment}
+      onSubmit={onSubmit}
+    />}
     <hr />
     <Box sx={{ m: 4 }}>
-      <Comments post={post} onEdit={(c: any) => console.log('EDIT COMMENT', c)} />
+      <Comments post={post} onEdit={(c: any) => { setComment(c); setShowCommentForm(true) }} />
     </Box>
   </Card >
 }

@@ -19,7 +19,7 @@ const schema = yup.object({
 export type FormValue = yup.InferType<typeof schema>
 const emptyComment = { message: '' };
 
-const EditCommentForm = ({ comment, onSubmit, onHide }: any) => {
+const EditCommentForm = ({ comment, onSubmit }: any) => {
   const { control, handleSubmit, reset } = useForm<FormValue>({
     resolver: yupResolver(schema),
     defaultValues: { ...comment ?? emptyComment },
