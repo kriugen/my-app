@@ -28,7 +28,9 @@ export default function ViewPost({ post, imageUrl, onEdit, onDelete }: any) {
       try {
         await API.graphql({
           query: createComment,
-          variables: { input: formData },
+          variables: {
+            input: { ...formData, postID: post.id },
+          },
           authMode: "AMAZON_COGNITO_USER_POOLS",
         });
       } catch (e: any) {
@@ -42,7 +44,7 @@ export default function ViewPost({ post, imageUrl, onEdit, onDelete }: any) {
 
     const id = await newComment(formData);
     if (id)
-      router.push(`/posts/${id}`);
+      router.push(`/posts/${post.id}`);
   };
 
   return <Card>
