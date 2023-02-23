@@ -1,23 +1,22 @@
-import { Avatar, Card, CardActionArea, CardContent, Typography } from "@mui/material";
+import { Avatar, Box, Typography } from "@mui/material";
 
 const Comment = ({ comment }: any) => {
-  return <Card sx={{ m: 1, width: '100%'}}>
-      <CardActionArea sx={{ display: 'flex', minHeight: 140 }}>
+  return <Box sx={{ m: 2, width: '100%' }}>
+    <Box sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>
       <Avatar
         sx={{ width: 40, height: 40 }}
         src='/images/avatars/broken-link.png'
-        alt={ comment.createdBy }
+        alt={comment.createdBy}
       />
-        <CardContent sx={{ width: 1 }}>
-          <Typography sx={{ fontSize: 12 }} color="text.secondary" gutterBottom>
-            by: { comment.createdBy }&nbsp;{comment.createdAt}
-          </Typography>
-          <Typography gutterBottom variant="h5" component="div">
-            {comment.message}
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-    </Card>
+      <Typography sx={{ fontSize: 12 }} color="text.secondary">
+        {comment.createdBy}
+      </Typography>
+      <Typography>{comment.createdAt}</Typography>
+    </Box>
+    <Typography sx={{ pl: 12 }} component="div">
+      {comment.message}
+    </Typography>
+  </Box>
 };
 
 export default Comment;

@@ -1,7 +1,9 @@
-import { Box, Button, 
-  Card, CardActions, 
-  CardContent, CardMedia, 
-  Typography } from "@mui/material";
+import {
+  Box, Button,
+  Card, CardActions,
+  CardContent, CardMedia,
+  Typography
+} from "@mui/material";
 import ReactMarkDown from "react-markdown";
 import { useAuthContext } from "../AuthContextProvider";
 import Comments from "./Comments";
@@ -11,15 +13,15 @@ export default function ViewPost({ post, imageUrl, onEdit, onDelete }: any) {
   const { user } = useAuthContext();
   return <Card>
     <Box sx={{ display: 'flex', p: 5, alignItems: 'center' }}>
-    {
-      imageUrl && <CardMedia
-        component="img"
-        image={ imageUrl }
-        sx={{ maxWidth: 200 }}
-      /> 
-    }
+      {
+        imageUrl && <CardMedia
+          component="img"
+          image={imageUrl}
+          sx={{ maxWidth: 200 }}
+        />
+      }
       <Typography gutterBottom variant="h5" component="div">
-        { post.title }
+        {post.title}
       </Typography>
     </Box>
     <CardContent sx={{ pt: 0 }}>
@@ -27,12 +29,14 @@ export default function ViewPost({ post, imageUrl, onEdit, onDelete }: any) {
         <ReactMarkDown className='prose'>{post.content ?? ''}</ReactMarkDown>
       </Typography>
     </CardContent>
-    { user?.username == post.username &&
-    <CardActions sx={{ justifyContent: 'end' }}>
-      <Button onClick={onEdit}>Edit</Button>
-      <Button onClick={onDelete}>Delete</Button>
-    </CardActions> }
+    {user?.username == post.username &&
+      <CardActions sx={{ justifyContent: 'end' }}>
+        <Button onClick={onEdit}>Edit</Button>
+        <Button onClick={onDelete}>Delete</Button>
+      </CardActions>}
+    <hr />
     <EditCommentForm />
+    <hr />
     <Comments post={post} />
   </Card>
 }
