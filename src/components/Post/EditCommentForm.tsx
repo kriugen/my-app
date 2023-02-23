@@ -19,7 +19,7 @@ const schema = yup.object({
 export type FormValue = yup.InferType<typeof schema>
 const emptyComment = { message: '' };
 
-const EditCommentForm = ({ comment, onSubmit }: any) => {
+const EditCommentForm = ({ comment, onSubmit, onHide }: any) => {
   const { control, handleSubmit, reset } = useForm<FormValue>({
     resolver: yupResolver(schema),
     defaultValues: { ...comment ?? emptyComment },
@@ -47,12 +47,11 @@ const EditCommentForm = ({ comment, onSubmit }: any) => {
           }}
         />)}
     />
-    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start' }}>
+    <Box sx={{ display: 'flex', justifyContent: 'end', alignItems: 'start' }}>
       <LoadingButton
         loading={false}
         type="submit"
         variant="contained"
-        fullWidth
         sx={{ ml: 5 }}
         data-test="submit-post"
       >

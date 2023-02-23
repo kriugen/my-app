@@ -14,7 +14,6 @@ import { API } from "aws-amplify";
 import { createComment } from "src/graphql/mutations";
 import { useErrorContext } from "../ErrorContextProvider";
 import { useState } from "react";
-import ButtonRight from "../ButtonRight";
 
 export default function ViewPost({ post, imageUrl, onEdit, onDelete }: any) {
   const { user } = useAuthContext();
@@ -72,18 +71,17 @@ export default function ViewPost({ post, imageUrl, onEdit, onDelete }: any) {
     </CardContent>
     {user?.username == post.username &&
       <CardActions sx={{ justifyContent: 'end' }}>
+        {showCommentForm ?
+          <Button sx={{ mr: 'auto' }} onClick={() => setShowCommentForm(false)}>Hide</Button>
+          : <Button sx={{ mr: 'auto' }} onClick={() => setShowCommentForm(true)}>Add Comment</Button>
+        }
         <Button onClick={onEdit}>Edit</Button>
         <Button onClick={onDelete}>Delete</Button>
       </CardActions>}
+    {showCommentForm && <EditCommentForm onHide={() => setShowCommentForm(false)} onSubmit={onSubmit} />}
     <hr />
-    {showCommentForm ?
-      <>
-        <ButtonRight onClick={() => setShowCommentForm(false)}>Hide</ButtonRight>
-        <EditCommentForm onSubmit={onSubmit} />
-      </>
-      : <ButtonRight onClick={() => setShowCommentForm(true)}>Add Comment</ButtonRight>
-    }
-    <hr style={{ clear: 'both' }} />
-    <Comments post={post} />
+    <Box sx={{ m: 4 }}>
+      <Comments post={post} />
+    </Box>
   </Card >
 }
