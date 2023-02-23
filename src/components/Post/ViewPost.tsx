@@ -81,7 +81,7 @@ export default function ViewPost({ post, imageUrl, onEdit, onDelete }: any) {
     {showCommentForm && <EditCommentForm onHide={() => setShowCommentForm(false)} onSubmit={onSubmit} />}
     <hr />
     <Box sx={{ m: 4 }}>
-      <Comments post={post} />
+      <Comments post={post} onEdit={(c: any) => console.log('EDIT COMMENT', c)} />
     </Box>
   </Card >
 }

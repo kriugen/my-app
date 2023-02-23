@@ -2,7 +2,7 @@ import { Avatar, Box, IconButton, Typography } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
-const Comment = ({ comment }: any) => {
+const Comment = ({ comment, onEdit }: any) => {
   return <Box sx={{ m: 2, width: '100%' }}>
     <Box sx={{ display: 'flex', alignItems: 'center' }}>
       <Avatar
@@ -14,7 +14,7 @@ const Comment = ({ comment }: any) => {
         {comment.createdBy}
       </Typography>
       <Typography>{comment.createdAt}</Typography>
-      <IconButton><EditIcon /></IconButton>
+      <IconButton onClick={() => onEdit(comment)}><EditIcon /></IconButton>
       <IconButton><DeleteIcon /></IconButton>
     </Box>
     <Typography sx={{ pl: 12 }} component="div">
