@@ -13,11 +13,13 @@ import { v4 as uuid } from "uuid";
 import { API } from "aws-amplify";
 import { createComment } from "src/graphql/mutations";
 import { useErrorContext } from "../ErrorContextProvider";
+import { useState } from "react";
 
 export default function ViewPost({ post, imageUrl, onEdit, onDelete }: any) {
   const { user } = useAuthContext();
   const router = useRouter();
   const { setError } = useErrorContext();
+  const [showCommentForm, setShowCommentForm] = useState(false);
 
   const onSubmit = async (formData: any) => {
 
@@ -43,8 +45,10 @@ export default function ViewPost({ post, imageUrl, onEdit, onDelete }: any) {
     }
 
     const id = await newComment(formData);
-    if (id)
+    if (id) {
+      setShowCommentForm(false);
       router.push(`/posts/${post.id}`);
+    }
   };
 
   return <Card>
@@ -71,8 +75,18 @@ export default function ViewPost({ post, imageUrl, onEdit, onDelete }: any) {
         <Button onClick={onDelete}>Delete</Button>
       </CardActions>}
     <hr />
-    <EditCommentForm onSubmit={onSubmit} />
-    <hr />
+    {showCommentForm ?
+      <>
+        <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <Button onClick={() => { setShowCommentForm(false); }}>Hide</Button>
+        </Box>
+        <EditCommentForm onSubmit={onSubmit} />
+      </>
+      : <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+        <Button sx={{ float: 'right' }} onClick={() => setShowCommentForm(true)}>Add Comment</Button>
+      </Box>
+    }
+    <hr style={{ clear: 'both' }} />
     <Comments post={post} />
-  </Card>
+  </Card >
 }

@@ -20,15 +20,20 @@ export type FormValue = yup.InferType<typeof schema>
 const emptyComment = { message: '' };
 
 const EditCommentForm = ({ comment, onSubmit }: any) => {
-  const { control, handleSubmit } = useForm<FormValue>({
+  const { control, handleSubmit, reset } = useForm<FormValue>({
     resolver: yupResolver(schema),
     defaultValues: { ...comment ?? emptyComment },
   });
 
+  const formSubmit = (data: any) => {
+    onSubmit(data);
+    reset();
+  }
+
   return <Box component="form"
-    sx={{ m: 3 }}
+    sx={{ m: 3, clear: 'both' }}
     noValidate
-    onSubmit={handleSubmit(onSubmit)}>
+    onSubmit={handleSubmit(formSubmit)}>
     <Controller
       name="message"
       control={control}
