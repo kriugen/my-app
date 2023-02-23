@@ -4,13 +4,47 @@ import {
   CardContent, CardMedia,
   Typography
 } from "@mui/material";
+import { useRouter } from "next/router";
 import ReactMarkDown from "react-markdown";
 import { useAuthContext } from "../AuthContextProvider";
 import Comments from "./Comments";
 import EditCommentForm from "./EditCommentForm";
+import { v4 as uuid } from "uuid";
+import { API } from "aws-amplify";
+import { createComment } from "src/graphql/mutations";
+import { useErrorContext } from "../ErrorContextProvider";
 
 export default function ViewPost({ post, imageUrl, onEdit, onDelete }: any) {
   const { user } = useAuthContext();
+  const router = useRouter();
+  const { setError } = useErrorContext();
+
+  const onSubmit = async (formData: any) => {
+
+    const newComment = async (formData: any) => {
+      const id = uuid();
+      formData.id = id;
+
+      try {
+        await API.graphql({
+          query: createComment,
+          variables: { input: formData },
+          authMode: "AMAZON_COGNITO_USER_POOLS",
+        });
+      } catch (e: any) {
+        setError(e);
+
+        return null;
+      }
+
+      return id;
+    }
+
+    const id = await newComment(formData);
+    if (id)
+      router.push(`/posts/${id}`);
+  };
+
   return <Card>
     <Box sx={{ display: 'flex', p: 5, alignItems: 'center' }}>
       {
@@ -35,7 +69,7 @@ export default function ViewPost({ post, imageUrl, onEdit, onDelete }: any) {
         <Button onClick={onDelete}>Delete</Button>
       </CardActions>}
     <hr />
-    <EditCommentForm />
+    <EditCommentForm onSubmit={onSubmit} />
     <hr />
     <Comments post={post} />
   </Card>
