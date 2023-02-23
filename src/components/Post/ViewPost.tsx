@@ -101,6 +101,7 @@ export default function ViewPost({ post, imageUrl, onEdit, onDelete }: any) {
     {showCommentForm && <EditCommentForm
       comment={comment}
       onSubmit={onSubmit}
+      onReset={() => setComment(undefined)}
     />}
     <hr />
     <Box sx={{ m: 4 }}>

@@ -9,8 +9,9 @@ const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
 });
 
 import "easymde/dist/easymde.min.css";
-import { Box } from "@mui/material";
+import { Box, Button, TextField } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
+import { useEffect } from "react";
 
 const schema = yup.object({
   message: yup.string(),
@@ -19,11 +20,15 @@ const schema = yup.object({
 export type FormValue = yup.InferType<typeof schema>
 const emptyComment = { message: '' };
 
-const EditCommentForm = ({ comment, onSubmit }: any) => {
+const EditCommentForm = ({ comment, onSubmit, onReset }: any) => {
+  console.log('COMMENT', comment)
   const { control, handleSubmit, reset } = useForm<FormValue>({
     resolver: yupResolver(schema),
-    defaultValues: { ...comment ?? emptyComment },
   });
+
+  useEffect(() => {
+    reset(comment ?? emptyComment);
+  }, [reset, comment]);
 
   const formSubmit = (data: any) => {
     onSubmit(data);
@@ -43,11 +48,13 @@ const EditCommentForm = ({ comment, onSubmit }: any) => {
         <SimpleMDE
           value={value}
           onChange={(value: any) => {
+            console.log('SMDE onChange', value)
             onChange(value);
           }}
         />)}
     />
     <Box sx={{ display: 'flex', justifyContent: 'end', alignItems: 'start' }}>
+      <Button onClick={() => onReset()}>Cancel</Button>
       <LoadingButton
         loading={false}
         type="submit"
@@ -55,7 +62,7 @@ const EditCommentForm = ({ comment, onSubmit }: any) => {
         sx={{ ml: 5 }}
         data-test="submit-post"
       >
-        Add Comment
+        {comment ? 'Update' : 'Add'}&nbsp;Comment
       </LoadingButton>
     </Box>
   </Box>
