@@ -105,7 +105,8 @@ export default function ViewPost({ post, imageUrl, onEdit, onDelete }: any) {
     />}
     <hr />
     <Box sx={{ m: 4 }}>
-      <Comments post={post} onEdit={(c: any) => { setComment(c); setShowCommentForm(true) }} />
+      <Comments post={post}
+        onEdit={(c: any) => { setComment(c); setShowCommentForm(true) }} />
     </Box>
   </Card >
 }

@@ -20,7 +20,7 @@ export default function ViewPostContainer({ post }: any) {
     if (!confirm('Do you really want to delete this post?')) {
       return;
     }
-    
+
     await API.graphql({
       query: deletePost,
       variables: { input: { id: post.id } },
@@ -32,11 +32,11 @@ export default function ViewPostContainer({ post }: any) {
 
   if (!post) {
     setError('Post not found');
-    
-return null;
+
+    return null;
   }
 
-  return <ViewPost 
+  return <ViewPost
     post={post}
     imageUrl={imageUrl}
     onEdit={onEdit}
@@ -73,7 +73,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }: any) =>
     query: getPost,
     variables: { id },
   });
-  
+
   return {
     props: {
       post: postData.data.getPost,
