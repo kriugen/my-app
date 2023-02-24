@@ -27,6 +27,9 @@ import { createEmotionCache } from 'src/@core/utils/create-emotion-cache'
 // ** React Perfect Scrollbar Style
 import 'react-perfect-scrollbar/dist/css/styles.css'
 
+import "../../styles/simplemde.scss";
+
+
 // ** Global css styles
 import '../../styles/globals.css'
 import { AuthContextProvider } from 'src/components/AuthContextProvider'
@@ -76,18 +79,18 @@ const App = (props: ExtendedAppProps) => {
 
       <ErrorContextProvider>
         <AuthContextProvider>
-        <LoadingContextProvider>
-          <SettingsProvider>
-            <SettingsConsumer>
-              {({ settings }) => {
-                return <ThemeComponent settings={settings}>
-                  <ErrorAlert />
-                  {getLayout(<Component {...pageProps} />)}
-                </ThemeComponent>
-              }}
-            </SettingsConsumer>
-          </SettingsProvider>
-        </LoadingContextProvider>
+          <LoadingContextProvider>
+            <SettingsProvider>
+              <SettingsConsumer>
+                {({ settings }) => {
+                  return <ThemeComponent settings={settings}>
+                    <ErrorAlert />
+                    {getLayout(<Component {...pageProps} />)}
+                  </ThemeComponent>
+                }}
+              </SettingsConsumer>
+            </SettingsProvider>
+          </LoadingContextProvider>
         </AuthContextProvider>
       </ErrorContextProvider>
     </CacheProvider>

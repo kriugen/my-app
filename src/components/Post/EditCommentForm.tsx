@@ -8,8 +8,7 @@ const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
   ssr: false,
 });
 
-import "easymde/dist/easymde.min.css";
-import { Box, Button, TextField } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import { useEffect } from "react";
 

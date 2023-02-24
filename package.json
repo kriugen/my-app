@@ -76,6 +76,8 @@
     "yup": "^0.32.11"
   },
   "devDependencies": {
+    "@aws-sdk/client-cognito-identity-provider": "^3.259.0",
+    "@aws-sdk/client-dynamodb": "^3.259.0",
     "@types/node": "16.11.11",
     "@types/nprogress": "^0.2.0",
     "@types/react": "17.0.37",
@@ -91,8 +93,7 @@
     "eslint-plugin-import": "^2.25.4",
     "next-transpile-modules": "^9.0.0",
     "prettier": "2.5.1",
-    "typescript": "4.5.2",
-    "@aws-sdk/client-cognito-identity-provider": "^3.259.0",
-    "@aws-sdk/client-dynamodb": "^3.259.0"
+    "sass": "^1.58.3",
+    "typescript": "4.5.2"
   }
 }

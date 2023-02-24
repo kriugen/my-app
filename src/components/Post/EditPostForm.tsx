@@ -8,7 +8,6 @@ const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
   ssr: false,
 });
 
-import "easymde/dist/easymde.min.css";
 import { Box, TextField } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import ImageUpload from "../ImageUpload";
@@ -19,7 +18,7 @@ const schema = yup.object({
 });
 
 export type FormValue = yup.InferType<typeof schema>
-const emptyPost = { title: '', content: ''};
+const emptyPost = { title: '', content: '' };
 
 const EditPostForm = ({ post, onSubmit, imageUrl, setImage }: any) => {
   const { register, control, handleSubmit, formState: { errors } } = useForm<FormValue>({
@@ -27,8 +26,8 @@ const EditPostForm = ({ post, onSubmit, imageUrl, setImage }: any) => {
     defaultValues: { ...post ?? emptyPost },
   });
 
-  return <Box component="form" 
-    sx={{width: 1, m: 3}}
+  return <Box component="form"
+    sx={{ width: 1, m: 3 }}
     noValidate
     onSubmit={handleSubmit(onSubmit)}>
     <TextField
@@ -38,13 +37,13 @@ const EditPostForm = ({ post, onSubmit, imageUrl, setImage }: any) => {
       label="Title"
       placeholder="Title"
       helperText={
-        errors.title 
+        errors.title
           ? <span data-test='invoice-number-error'>{errors.title.message}</span>
           : " "
       }
       inputProps={{
         "data-test": "title"
-      }} 
+      }}
     />
     <Controller
       name="content"
@@ -57,19 +56,19 @@ const EditPostForm = ({ post, onSubmit, imageUrl, setImage }: any) => {
           onChange={(value: any) => {
             onChange(value);
           }}
-      />)}
+        />)}
     />
     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start' }}>
       <ImageUpload imageUrl={imageUrl} setImage={setImage} />
       <LoadingButton
-          loading={false}
-          type="submit"
-          variant="contained"
-          fullWidth
-          sx={{ ml: 5 }}
-          data-test="submit-post"
-        >
-              Submit
+        loading={false}
+        type="submit"
+        variant="contained"
+        fullWidth
+        sx={{ ml: 5 }}
+        data-test="submit-post"
+      >
+        Submit
       </LoadingButton>
     </Box>
   </Box>
