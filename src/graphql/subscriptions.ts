@@ -137,3 +137,51 @@ export const onDeleteComment = /* GraphQL */ `
     }
   }
 `;
+export const onCreateProfile = /* GraphQL */ `
+  subscription OnCreateProfile(
+    $filter: ModelSubscriptionProfileFilterInput
+    $createdBy: String
+  ) {
+    onCreateProfile(filter: $filter, createdBy: $createdBy) {
+      id
+      firstName
+      lastName
+      DOB
+      createdAt
+      updatedAt
+      createdBy
+    }
+  }
+`;
+export const onUpdateProfile = /* GraphQL */ `
+  subscription OnUpdateProfile(
+    $filter: ModelSubscriptionProfileFilterInput
+    $createdBy: String
+  ) {
+    onUpdateProfile(filter: $filter, createdBy: $createdBy) {
+      id
+      firstName
+      lastName
+      DOB
+      createdAt
+      updatedAt
+      createdBy
+    }
+  }
+`;
+export const onDeleteProfile = /* GraphQL */ `
+  subscription OnDeleteProfile(
+    $filter: ModelSubscriptionProfileFilterInput
+    $createdBy: String
+  ) {
+    onDeleteProfile(filter: $filter, createdBy: $createdBy) {
+      id
+      firstName
+      lastName
+      DOB
+      createdAt
+      updatedAt
+      createdBy
+    }
+  }
+`;

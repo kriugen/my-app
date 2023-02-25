@@ -157,6 +157,44 @@ export type DeleteCommentInput = {
   id: string,
 };
 
+export type CreateProfileInput = {
+  id?: string | null,
+  firstName?: string | null,
+  lastName?: string | null,
+  DOB?: string | null,
+};
+
+export type ModelProfileConditionInput = {
+  firstName?: ModelStringInput | null,
+  lastName?: ModelStringInput | null,
+  DOB?: ModelStringInput | null,
+  and?: Array< ModelProfileConditionInput | null > | null,
+  or?: Array< ModelProfileConditionInput | null > | null,
+  not?: ModelProfileConditionInput | null,
+};
+
+export type Profile = {
+  __typename: "Profile",
+  id: string,
+  firstName?: string | null,
+  lastName?: string | null,
+  DOB?: string | null,
+  createdAt: string,
+  updatedAt: string,
+  createdBy?: string | null,
+};
+
+export type UpdateProfileInput = {
+  id: string,
+  firstName?: string | null,
+  lastName?: string | null,
+  DOB?: string | null,
+};
+
+export type DeleteProfileInput = {
+  id: string,
+};
+
 export type ModelPostFilterInput = {
   id?: ModelIDInput | null,
   title?: ModelStringInput | null,
@@ -198,6 +236,22 @@ export type ModelCommentFilterInput = {
   and?: Array< ModelCommentFilterInput | null > | null,
   or?: Array< ModelCommentFilterInput | null > | null,
   not?: ModelCommentFilterInput | null,
+};
+
+export type ModelProfileFilterInput = {
+  id?: ModelIDInput | null,
+  firstName?: ModelStringInput | null,
+  lastName?: ModelStringInput | null,
+  DOB?: ModelStringInput | null,
+  and?: Array< ModelProfileFilterInput | null > | null,
+  or?: Array< ModelProfileFilterInput | null > | null,
+  not?: ModelProfileFilterInput | null,
+};
+
+export type ModelProfileConnection = {
+  __typename: "ModelProfileConnection",
+  items:  Array<Profile | null >,
+  nextToken?: string | null,
 };
 
 export type ModelSubscriptionPostFilterInput = {
@@ -258,6 +312,15 @@ export type ModelSubscriptionCommentFilterInput = {
   postID?: ModelSubscriptionIDInput | null,
   and?: Array< ModelSubscriptionCommentFilterInput | null > | null,
   or?: Array< ModelSubscriptionCommentFilterInput | null > | null,
+};
+
+export type ModelSubscriptionProfileFilterInput = {
+  id?: ModelSubscriptionIDInput | null,
+  firstName?: ModelSubscriptionStringInput | null,
+  lastName?: ModelSubscriptionStringInput | null,
+  DOB?: ModelSubscriptionStringInput | null,
+  and?: Array< ModelSubscriptionProfileFilterInput | null > | null,
+  or?: Array< ModelSubscriptionProfileFilterInput | null > | null,
 };
 
 export type CreatePostMutationVariables = {
@@ -407,6 +470,60 @@ export type DeleteCommentMutation = {
       updatedAt: string,
     } | null,
     postID?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    createdBy?: string | null,
+  } | null,
+};
+
+export type CreateProfileMutationVariables = {
+  input: CreateProfileInput,
+  condition?: ModelProfileConditionInput | null,
+};
+
+export type CreateProfileMutation = {
+  createProfile?:  {
+    __typename: "Profile",
+    id: string,
+    firstName?: string | null,
+    lastName?: string | null,
+    DOB?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    createdBy?: string | null,
+  } | null,
+};
+
+export type UpdateProfileMutationVariables = {
+  input: UpdateProfileInput,
+  condition?: ModelProfileConditionInput | null,
+};
+
+export type UpdateProfileMutation = {
+  updateProfile?:  {
+    __typename: "Profile",
+    id: string,
+    firstName?: string | null,
+    lastName?: string | null,
+    DOB?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    createdBy?: string | null,
+  } | null,
+};
+
+export type DeleteProfileMutationVariables = {
+  input: DeleteProfileInput,
+  condition?: ModelProfileConditionInput | null,
+};
+
+export type DeleteProfileMutation = {
+  deleteProfile?:  {
+    __typename: "Profile",
+    id: string,
+    firstName?: string | null,
+    lastName?: string | null,
+    DOB?: string | null,
     createdAt: string,
     updatedAt: string,
     createdBy?: string | null,
@@ -611,6 +728,46 @@ export type CommentsByPostIDQuery = {
   } | null,
 };
 
+export type GetProfileQueryVariables = {
+  id: string,
+};
+
+export type GetProfileQuery = {
+  getProfile?:  {
+    __typename: "Profile",
+    id: string,
+    firstName?: string | null,
+    lastName?: string | null,
+    DOB?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    createdBy?: string | null,
+  } | null,
+};
+
+export type ListProfilesQueryVariables = {
+  filter?: ModelProfileFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListProfilesQuery = {
+  listProfiles?:  {
+    __typename: "ModelProfileConnection",
+    items:  Array< {
+      __typename: "Profile",
+      id: string,
+      firstName?: string | null,
+      lastName?: string | null,
+      DOB?: string | null,
+      createdAt: string,
+      updatedAt: string,
+      createdBy?: string | null,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
 export type OnCreatePostSubscriptionVariables = {
   filter?: ModelSubscriptionPostFilterInput | null,
   username?: string | null,
@@ -758,6 +915,60 @@ export type OnDeleteCommentSubscription = {
       updatedAt: string,
     } | null,
     postID?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    createdBy?: string | null,
+  } | null,
+};
+
+export type OnCreateProfileSubscriptionVariables = {
+  filter?: ModelSubscriptionProfileFilterInput | null,
+  createdBy?: string | null,
+};
+
+export type OnCreateProfileSubscription = {
+  onCreateProfile?:  {
+    __typename: "Profile",
+    id: string,
+    firstName?: string | null,
+    lastName?: string | null,
+    DOB?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    createdBy?: string | null,
+  } | null,
+};
+
+export type OnUpdateProfileSubscriptionVariables = {
+  filter?: ModelSubscriptionProfileFilterInput | null,
+  createdBy?: string | null,
+};
+
+export type OnUpdateProfileSubscription = {
+  onUpdateProfile?:  {
+    __typename: "Profile",
+    id: string,
+    firstName?: string | null,
+    lastName?: string | null,
+    DOB?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    createdBy?: string | null,
+  } | null,
+};
+
+export type OnDeleteProfileSubscriptionVariables = {
+  filter?: ModelSubscriptionProfileFilterInput | null,
+  createdBy?: string | null,
+};
+
+export type OnDeleteProfileSubscription = {
+  onDeleteProfile?:  {
+    __typename: "Profile",
+    id: string,
+    firstName?: string | null,
+    lastName?: string | null,
+    DOB?: string | null,
     createdAt: string,
     updatedAt: string,
     createdBy?: string | null,

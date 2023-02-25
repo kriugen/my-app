@@ -29,3 +29,17 @@ type Comment
   post: Post @belongsTo(fields: ["postID"])
   postID: ID @index(name: "byPost")
 }
+
+type Profile
+  @model
+  @auth(
+    rules: [
+      { allow: owner, ownerField: "createdBy" }
+      { allow: public, operations: [read] }
+    ]
+  ) {
+  id: ID!
+  firstName: String
+  lastName: String
+  DOB: AWSDate
+}

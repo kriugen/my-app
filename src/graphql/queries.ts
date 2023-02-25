@@ -197,3 +197,36 @@ export const commentsByPostID = /* GraphQL */ `
     }
   }
 `;
+export const getProfile = /* GraphQL */ `
+  query GetProfile($id: ID!) {
+    getProfile(id: $id) {
+      id
+      firstName
+      lastName
+      DOB
+      createdAt
+      updatedAt
+      createdBy
+    }
+  }
+`;
+export const listProfiles = /* GraphQL */ `
+  query ListProfiles(
+    $filter: ModelProfileFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listProfiles(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        firstName
+        lastName
+        DOB
+        createdAt
+        updatedAt
+        createdBy
+      }
+      nextToken
+    }
+  }
+`;
