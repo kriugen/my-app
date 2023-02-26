@@ -2,32 +2,11 @@ import { API } from "aws-amplify";
 import { useRouter } from "next/router";
 import { useErrorContext } from "../../components/ErrorContextProvider";
 
-import ViewPost from "../../components/Post/ViewPost";
 import { GetServerSideProps } from "next";
+import { useAuthContext } from "src/components/AuthContextProvider";
+import ViewProfile from "src/components/Profile/ViewProfile";
 
-export default function ViewPostContainer({ post }: any) {
-  const router = useRouter();
-  const { setError } = useErrorContext();
-
-  const onEdit = () => {
-    router.push(`/profile/${post.id}/edit`);
-  }
-
-  if (!post) {
-    setError('Post not found');
-
-    return null;
-  }
-
-  return <ViewPost
-    post={post}
-    imageUrl={imageUrl}
-    onEdit={onEdit}
-    onDelete={onDelete}
-  />;
-}
-
-const getPost = /* GraphQL */ `
+const getProfile = /* GraphQL */ `
   query GetPost($id: ID!) {
     getPost(id: $id) {
       id
@@ -50,16 +29,29 @@ const getPost = /* GraphQL */ `
   }
 `;
 
-export const getServerSideProps: GetServerSideProps = async ({ params }: any) => {
-  const { id } = params;
-  const postData: any = await API.graphql({
-    query: getPost,
-    variables: { id },
-  });
+export default function ViewPostContainer() {
+  const router = useRouter();
+  const { setError } = useErrorContext();
+  const { user } = useAuthContext();
+  console.log('USER PROFILE', user);
 
-  return {
-    props: {
-      post: postData.data.getPost,
-    },
-  };
+  if (!user) {
+    return null;
+  }
+
+  return <p>{user.username}</p>
+
+  // const onEdit = () => {
+  //   router.push(`/profile/${post.id}/edit`);
+  // }
+
+  // if (!post) {
+  //   setError('Post not found');
+  //   return null;
+  // }
+
+  // return <ViewProfile
+  //   profile={profile}
+  //   onEdit={onEdit}
+  // />;
 }
