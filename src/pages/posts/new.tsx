@@ -5,7 +5,6 @@ import { v4 as uuid } from "uuid";
 
 import Form from "../../components/Post/EditPostForm";
 import { useErrorContext } from "../../components/ErrorContextProvider";
-import { GetServerSideProps } from "next";
 import { createPost } from "src/graphql/mutations";
 
 function NewPostPage({ auth }: any) {
@@ -21,7 +20,7 @@ function NewPostPage({ auth }: any) {
   const [image, setImage] = useState(null);
   const onSubmit = async (formData: any) => {
     const id = await newPost(formData);
-    if (id) 
+    if (id)
       router.push(`/posts/${id}`);
   };
 
@@ -39,14 +38,14 @@ function NewPostPage({ auth }: any) {
     await saveImage(formData);
 
     try {
-        await API.graphql({
+      await API.graphql({
         query: createPost,
         variables: { input: formData },
         authMode: "AMAZON_COGNITO_USER_POOLS",
       });
     } catch (e: any) {
       setError(e);
-      
+
       return null;
     }
 
@@ -56,7 +55,7 @@ function NewPostPage({ auth }: any) {
   if (!auth)
     return null;
 
-  return <Form 
+  return <Form
     post={null}
     onSubmit={onSubmit}
     imageUrl={null}
@@ -64,13 +63,13 @@ function NewPostPage({ auth }: any) {
   />
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+export const getServerSideProps: any = async ({ req }: any) => {
   const SSR = withSSRContext({ req });
 
   try {
     await SSR.Auth.currentAuthenticatedUser();
-    
-return {
+
+    return {
       props: {
         auth: true,
       },

@@ -5,7 +5,6 @@ import { v4 as uuid } from "uuid";
 
 import Form from "../../../components/Post/EditPostForm";
 import { useErrorContext } from "../../../components/ErrorContextProvider";
-import { GetServerSideProps } from "next";
 import { getPost } from "src/graphql/queries";
 import { useImageUrl } from "src/hooks";
 import { updatePost } from "src/graphql/mutations";
@@ -19,7 +18,7 @@ function FormContainer({ post }: any) {
 
   const onSubmit = async (formData: any) => {
     const id = await editPost(formData);
-    if (id) 
+    if (id)
       router.push(`/posts/${id}`);
   };
 
@@ -36,7 +35,7 @@ function FormContainer({ post }: any) {
     await saveImage(postUpdated);
 
     try {
-        await API.graphql({
+      await API.graphql({
         query: updatePost,
         variables: { input: postUpdated },
         authMode: "AMAZON_COGNITO_USER_POOLS",
@@ -49,21 +48,21 @@ function FormContainer({ post }: any) {
     return formData.id;
   }
 
-  return <Form 
-    post={post} 
-    onSubmit={onSubmit} 
-    imageUrl={imageUrl} 
-    setImage={setImage} 
+  return <Form
+    post={post}
+    onSubmit={onSubmit}
+    imageUrl={imageUrl}
+    setImage={setImage}
   />;
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ params }: any) => {
+export const getServerSideProps: any = async ({ params }: any) => {
   const { id } = params;
   const postData: any = await API.graphql({
     query: getPost,
     variables: { id },
   });
-  
+
   return {
     props: {
       post: postData.data.getPost,

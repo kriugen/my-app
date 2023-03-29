@@ -5,7 +5,6 @@ import { useImageUrl } from "../../../hooks";
 import { useErrorContext } from "../../../components/ErrorContextProvider";
 
 import ViewPost from "../../../components/Post/ViewPost";
-import { GetServerSideProps } from "next";
 
 export default function ViewPostContainer({ post }: any) {
   const router = useRouter();
@@ -67,7 +66,7 @@ const getPost = /* GraphQL */ `
   }
 `;
 
-export const getServerSideProps: GetServerSideProps = async ({ params }: any) => {
+export const getServerSideProps: any = async ({ params }: any) => {
   const { id } = params;
   const postData: any = await API.graphql({
     query: getPost,

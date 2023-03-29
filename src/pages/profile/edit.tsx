@@ -3,7 +3,6 @@ import { API } from "aws-amplify";
 import Form from "../../components/EditProfileForm";
 import { useErrorContext } from "../../components/ErrorContextProvider";
 import { updateProfile } from "src/graphql/mutations";
-import { GetServerSideProps } from "next";
 import { getProfile } from "src/graphql/queries";
 
 function FormContainer({ profile }: any) {
@@ -35,7 +34,7 @@ function FormContainer({ profile }: any) {
   />;
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ params }: any) => {
+export const getServerSideProps: any = async ({ params }: any) => {
   const { id } = params;
   const profileData: any = await API.graphql({
     query: getProfile,

@@ -1,5 +1,5 @@
 import { Amplify, Auth, Hub } from "aws-amplify";
-import { PropsWithChildren, useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { createContext } from "react";
 
 import awsConfig from '../aws-exports';
@@ -20,7 +20,7 @@ const defaultValue = {
 }
 
 const AuthContext = createContext<ContextType>(defaultValue);
-export const AuthContextProvider = ({ children }: PropsWithChildren) => {
+export const AuthContextProvider = ({ children }: any) => {
   const [user, setUser] = useState(defaultValue.user);
   useEffect(() => {
     authListener();
