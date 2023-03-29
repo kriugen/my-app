@@ -3,6 +3,7 @@ import { useState, SyntheticEvent, Fragment } from 'react'
 
 // ** Next Import
 import { useRouter } from 'next/router'
+import Link from 'next/link'
 
 // ** MUI Imports
 import Box from '@mui/material/Box'
@@ -88,8 +89,7 @@ const UserDropdown = () => {
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
         {user ? <div><Box sx={{ pt: 2, pb: 3, px: 4 }}>
-          <Box sx={{ display: 'flex', alignItems: 'center' }}
-            onClick={() => { console.log('USER', user); router.push('/profile/' + user.attributes?.sub) }}>
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Badge
               overlap='circular'
               badgeContent={<BadgeContentSpan />}
@@ -111,10 +111,12 @@ const UserDropdown = () => {
         </Box>
           <Divider sx={{ mt: 0, mb: 1 }} />
           <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose()}>
-            <Box sx={styles}>
-              <AccountOutline sx={{ marginRight: 2 }} />
-              Profile
-            </Box>
+            <Link href={'/profile/' + user.attributes?.sub} passHref>
+              <Box sx={styles}>
+                <AccountOutline sx={{ marginRight: 2 }} />
+                Profile
+              </Box>
+            </Link>
           </MenuItem>
           <Divider />
           <MenuItem data-test='logout' sx={{ py: 2 }} onClick={() => { logOut(); handleDropdownClose() }}>
