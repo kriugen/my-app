@@ -1,4 +1,5 @@
 import { API, withSSRContext } from "aws-amplify";
+import { useEffect } from "react";
 import { createProfile } from "src/graphql/mutations";
 
 const getProfile = `
@@ -12,17 +13,28 @@ const getProfile = `
   }`;
 
 function Profile({ id, error }: any) {
-  return <div>Profile for user sub {id}, error {error}</div>
+  useEffect(() => {
+    getOrCreateProfile(id);
+  }, [id])
+
+  if (error) {
+    return <div>{error}</div>
+  }
+
+  return <div>Profile for user sub {id}</div>
 }
 
 export const getServerSideProps: any = async ({ req, params }: any) => {
   const { id } = params;
 
   const SSR = withSSRContext({ req });
-
   try {
     await SSR.Auth.currentAuthenticatedUser();
-    return await getOrCreateProfile(id);
+    return {
+      props: {
+        id,
+      }
+    }
   } catch (e) {
     return {
       props: {
@@ -39,7 +51,6 @@ async function getOrCreateProfile(id: string) {
   });
 
   let data = profileData.data.getPost;
-
   if (!data) {
     try {
       data = {
@@ -53,20 +64,13 @@ async function getOrCreateProfile(id: string) {
         },
         authMode: "AMAZON_COGNITO_USER_POOLS",
       });
+
     } catch (e: any) {
-      return {
-        props: {
-          error: e.message,
-        }
-      }
+      return <div>{e.message}</div>
     }
   }
 
-  return {
-    props: {
-      id: data.id,
-    },
-  };
+  return data;
 }
 
 export default Profile;
