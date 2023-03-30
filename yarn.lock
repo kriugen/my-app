@@ -7444,7 +7444,7 @@
   "resolved" "https://registry.npmjs.org/earcut/-/earcut-2.2.4.tgz"
   "version" "2.2.4"
 
-"easymde@>= 2.0.0 < 3.0.0":
+"easymde@^2.18.0", "easymde@>= 2.0.0 < 3.0.0":
   "integrity" "sha512-IxVVUxNWIoXLeqtBU4BLc+eS/ScYhT1Dcb6yF5Wchoj1iXAV+TIIDWx+NCaZhY7RcSHqDPKllbYq7nwGKILnoA=="
   "resolved" "https://registry.npmjs.org/easymde/-/easymde-2.18.0.tgz"
   "version" "2.18.0"
