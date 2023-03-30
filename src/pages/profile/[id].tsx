@@ -1,4 +1,4 @@
-import { API } from "aws-amplify";
+import { API, withSSRContext } from "aws-amplify";
 import { createProfile } from "src/graphql/mutations";
 
 const getProfile = `
@@ -11,13 +11,28 @@ const getProfile = `
     }
   }`;
 
-function Profile({ id }: any) {
-  return <div>Profile for user sub {id}</div>
+function Profile({ id, error }: any) {
+  return <div>Profile for user sub {id}, error {error}</div>
 }
 
-export const getServerSideProps: any = async ({ params }: any) => {
+export const getServerSideProps: any = async ({ req, params }: any) => {
   const { id } = params;
 
+  const SSR = withSSRContext({ req });
+
+  try {
+    await SSR.Auth.currentAuthenticatedUser();
+    return await getOrCreateProfile(id);
+  } catch (e) {
+    return {
+      props: {
+        error: 'User not authenticated',
+      }
+    }
+  }
+}
+
+async function getOrCreateProfile(id: string) {
   const profileData: any = await API.graphql({
     query: getProfile,
     variables: { id },
@@ -25,7 +40,6 @@ export const getServerSideProps: any = async ({ params }: any) => {
 
   let data = profileData.data.getPost;
 
-  console.log('PROFILE DATA',)
   if (!data) {
     try {
       data = {
@@ -40,10 +54,9 @@ export const getServerSideProps: any = async ({ params }: any) => {
         authMode: "AMAZON_COGNITO_USER_POOLS",
       });
     } catch (e: any) {
-      console.log('ERROR', e)
       return {
         props: {
-          error: e,
+          error: e.message,
         }
       }
     }
