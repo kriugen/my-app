@@ -5,7 +5,7 @@ import {
   Typography
 } from "@mui/material";
 
-export default function ViewPost({ profile, onEdit }: any) {
+export default function ViewProfile({ profile, onEdit }: any) {
   return <Card>
     <Box sx={{ display: 'flex', p: 5, alignItems: 'center' }}>
       <Typography gutterBottom variant="h5" component="div">
