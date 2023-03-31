@@ -1,6 +1,6 @@
 import { API } from "aws-amplify";
 import { useEffect, useState } from "react";
-import { createProfile } from "src/graphql/mutations";
+import { createProfile, updateProfile } from "src/graphql/mutations";
 import { useErrorContext } from "../ErrorContextProvider";
 import ProfileForm from "./ProfileForm";
 
@@ -34,8 +34,21 @@ function ProfileContainer({ id }: any) {
     return <div>Loading Profile</div>
   }
 
+  async function submitProfile(profile: any) {
+    try {
+      await API.graphql({
+        query: updateProfile,
+        variables: { input: profile },
+        authMode: "AMAZON_COGNITO_USER_POOLS",
+      });
+    } catch (e: any) {
+      setError(e.message);
+      return null;
+    }
+  }
+
   return <ProfileForm profile={profile}
-    onSubmit={(profile: any) => console.log('SUBMIT PROFILE', profile)} />
+    onSubmit={(profile: any) => submitProfile(profile)} />
 }
 
 async function getOrCreateProfile(id: string) {
