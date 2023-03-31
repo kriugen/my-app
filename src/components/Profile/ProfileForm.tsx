@@ -4,6 +4,7 @@ import * as yup from "yup";
 
 import { Box, TextField } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
+import { useEffect } from "react";
 
 const schema = yup.object({
   firstName: yup.string().max(128).required(),
@@ -14,10 +15,14 @@ export type FormValue = yup.InferType<typeof schema>
 const emptyProfile = { id: '', firstName: '', lastName: '' };
 
 const ProfileForm = ({ profile, onSubmit }: any) => {
-  const { register, handleSubmit, formState: { errors } } = useForm<FormValue>({
+  const { register, handleSubmit, reset, formState: { errors, isDirty, dirtyFields, defaultValues } } = useForm<FormValue>({
     resolver: yupResolver(schema),
     defaultValues: { ...profile ?? emptyProfile },
   });
+
+  useEffect(() => {
+    reset(profile);
+  }, [profile, reset]);
 
   return <Box component="form"
     sx={{ width: 1, m: 3 }}
@@ -56,6 +61,7 @@ const ProfileForm = ({ profile, onSubmit }: any) => {
     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start' }}>
       <LoadingButton
         loading={false}
+        disabled={!isDirty}
         type="submit"
         variant="contained"
         fullWidth

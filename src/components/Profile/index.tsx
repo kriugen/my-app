@@ -34,13 +34,15 @@ function ProfileContainer({ id }: any) {
     return <div>Loading Profile</div>
   }
 
-  async function submitProfile(profile: any) {
+  async function submitProfile(updatedProfile: any) {
     try {
       await API.graphql({
         query: updateProfile,
-        variables: { input: profile },
+        variables: { input: updatedProfile },
         authMode: "AMAZON_COGNITO_USER_POOLS",
       });
+
+      setProfile(updatedProfile);
     } catch (e: any) {
       setError(e.message);
       return null;
