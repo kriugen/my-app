@@ -2,6 +2,7 @@ import { API } from "aws-amplify";
 import { useEffect, useState } from "react";
 import { createProfile } from "src/graphql/mutations";
 import { useErrorContext } from "../ErrorContextProvider";
+import ProfileForm from "./ProfileForm";
 
 const getProfile = `
   query GetProfile($id: ID!) {
@@ -27,13 +28,14 @@ function ProfileContainer({ id }: any) {
         setError(e.message);
       }
     }
-  }, [])
+  }, [id, setError])
 
   if (!profile) {
     return <div>Loading Profile</div>
   }
 
-  return <div>Profile for user sub {profile.id}</div>
+  return <ProfileForm profile={profile}
+    onSubmit={(profile: any) => console.log('SUBMIT PROFILE', profile)} />
 }
 
 async function getOrCreateProfile(id: string) {

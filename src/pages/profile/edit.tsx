@@ -1,6 +1,6 @@
 import { API } from "aws-amplify";
 
-import Form from "../../components/EditProfileForm";
+import Form from "../../components/Profile/ProfileForm";
 import { useErrorContext } from "../../components/ErrorContextProvider";
 import { updateProfile } from "src/graphql/mutations";
 import { getProfile } from "src/graphql/queries";
