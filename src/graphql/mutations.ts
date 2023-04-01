@@ -12,7 +12,7 @@ export const createPost = /* GraphQL */ `
       title
       content
       username
-      coverImage
+      image
       published
       comments {
         nextToken
@@ -32,7 +32,7 @@ export const updatePost = /* GraphQL */ `
       title
       content
       username
-      coverImage
+      image
       published
       comments {
         nextToken
@@ -52,7 +52,7 @@ export const deletePost = /* GraphQL */ `
       title
       content
       username
-      coverImage
+      image
       published
       comments {
         nextToken
@@ -75,7 +75,7 @@ export const createComment = /* GraphQL */ `
         title
         content
         username
-        coverImage
+        image
         published
         createdAt
         updatedAt
@@ -100,7 +100,7 @@ export const updateComment = /* GraphQL */ `
         title
         content
         username
-        coverImage
+        image
         published
         createdAt
         updatedAt
@@ -125,7 +125,7 @@ export const deleteComment = /* GraphQL */ `
         title
         content
         username
-        coverImage
+        image
         published
         createdAt
         updatedAt
@@ -147,6 +147,7 @@ export const createProfile = /* GraphQL */ `
       firstName
       lastName
       DOB
+      image
       createdAt
       updatedAt
       createdBy
@@ -163,6 +164,7 @@ export const updateProfile = /* GraphQL */ `
       firstName
       lastName
       DOB
+      image
       createdAt
       updatedAt
       createdBy
@@ -179,6 +181,7 @@ export const deleteProfile = /* GraphQL */ `
       firstName
       lastName
       DOB
+      image
       createdAt
       updatedAt
       createdBy

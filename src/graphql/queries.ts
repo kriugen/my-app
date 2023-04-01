@@ -9,7 +9,7 @@ export const getPost = /* GraphQL */ `
       title
       content
       username
-      coverImage
+      image
       published
       comments {
         nextToken
@@ -31,7 +31,7 @@ export const listPosts = /* GraphQL */ `
         title
         content
         username
-        coverImage
+        image
         published
         createdAt
         updatedAt
@@ -60,7 +60,7 @@ export const postsByTitle = /* GraphQL */ `
         title
         content
         username
-        coverImage
+        image
         published
         createdAt
         updatedAt
@@ -89,7 +89,7 @@ export const postsByUsername = /* GraphQL */ `
         title
         content
         username
-        coverImage
+        image
         published
         createdAt
         updatedAt
@@ -120,7 +120,7 @@ export const postsByPublishedAndTitle = /* GraphQL */ `
         title
         content
         username
-        coverImage
+        image
         published
         createdAt
         updatedAt
@@ -139,7 +139,7 @@ export const getComment = /* GraphQL */ `
         title
         content
         username
-        coverImage
+        image
         published
         createdAt
         updatedAt
@@ -204,6 +204,7 @@ export const getProfile = /* GraphQL */ `
       firstName
       lastName
       DOB
+      image
       createdAt
       updatedAt
       createdBy
@@ -222,6 +223,7 @@ export const listProfiles = /* GraphQL */ `
         firstName
         lastName
         DOB
+        image
         createdAt
         updatedAt
         createdBy
