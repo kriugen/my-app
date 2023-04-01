@@ -24,8 +24,8 @@ function FormContainer({ post }: any) {
 
   const saveImage = async (post: any) => {
     if (image) {
-      post.coverImage = `${(image as any).name}_${uuid()}`;
-      await Storage.put(post.coverImage, image);
+      post.image = `${(image as any).name}_${uuid()}`;
+      await Storage.put(post.image, image);
     }
   }
 

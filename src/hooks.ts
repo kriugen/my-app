@@ -5,10 +5,10 @@ export function useImageUrl(post: any) {
   const [imageUrl, setImageUrl] = useState<string | null>();
   useEffect(() => {
     if (post) {
-      if (!post.coverImage) {
+      if (!post.image) {
         setImageUrl(null);
       } else {
-        Storage.get(post.coverImage)
+        Storage.get(post.image)
           .then((imageUrl) => setImageUrl(imageUrl));
       }
     }

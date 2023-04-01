@@ -50,7 +50,7 @@ const getPost = /* GraphQL */ `
       title
       content
       username
-      coverImage
+      image
       published
       comments {
         items {
