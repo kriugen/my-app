@@ -1,8 +1,10 @@
-import { API } from "aws-amplify";
+import { API, Storage } from "aws-amplify";
 import { useEffect, useState } from "react";
 import { createProfile, updateProfile } from "src/graphql/mutations";
+import { useImageUrl } from "src/hooks";
 import { useErrorContext } from "../ErrorContextProvider";
 import ProfileForm from "./ProfileForm";
+import { v4 as uuid } from "uuid";
 
 const getProfile = `
   query GetProfile($id: ID!) {
@@ -17,6 +19,9 @@ const getProfile = `
 function ProfileContainer({ id }: any) {
   const { setError } = useErrorContext();
   const [profile, setProfile] = useState<{ id: string } | null>(null);
+
+  const [image, setImage] = useState(null);
+  const imageUrl = useImageUrl(profile);
 
   useEffect(() => {
     profileHandler();
@@ -34,8 +39,17 @@ function ProfileContainer({ id }: any) {
     return <div>Loading Profile</div>
   }
 
+  const saveImage = async (profile: any) => {
+    if (image) {
+      profile.image = `${(image as any).name}_${uuid()}`;
+      await Storage.put(profile.image, image);
+    }
+  }
+
   async function submitProfile(updatedProfile: any) {
     try {
+      await saveImage(updatedProfile);
+
       await API.graphql({
         query: updateProfile,
         variables: { input: updatedProfile },
@@ -49,7 +63,7 @@ function ProfileContainer({ id }: any) {
     }
   }
 
-  return <ProfileForm profile={profile}
+  return <ProfileForm profile={profile} imageUrl={imageUrl} setImage={setImage}
     onSubmit={(profile: any) => submitProfile(profile)} />
 }
 

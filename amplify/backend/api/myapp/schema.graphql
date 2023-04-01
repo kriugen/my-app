@@ -10,7 +10,7 @@ type Post @model
   username: String 
     @index(name: "postsByUsername", 
       queryField: "postsByUsername")
-  coverImage: String,
+  image: String
   published: Int
     @index(sortKeyFields: ["title"])
   comments: [Comment] @hasMany(indexName: "byPost", fields: ["id"])    
@@ -42,4 +42,5 @@ type Profile
   firstName: String
   lastName: String
   DOB: AWSDate
+  image: String
 }

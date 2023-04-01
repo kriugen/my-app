@@ -6,6 +6,8 @@ import { Box, TextField } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import { useEffect } from "react";
 
+import ImageUpload from "../ImageUpload";
+
 const schema = yup.object({
   firstName: yup.string().max(128).required(),
   lastName: yup.string().max(128).required(),
@@ -14,8 +16,8 @@ const schema = yup.object({
 export type FormValue = yup.InferType<typeof schema>
 const emptyProfile = { id: '', firstName: '', lastName: '' };
 
-const ProfileForm = ({ profile, onSubmit }: any) => {
-  const { register, handleSubmit, reset, formState: { errors, isDirty, dirtyFields, defaultValues } } = useForm<FormValue>({
+const ProfileForm = ({ profile, onSubmit, imageUrl, setImage }: any) => {
+  const { register, handleSubmit, reset, formState: { errors, isDirty } } = useForm<FormValue>({
     resolver: yupResolver(schema),
     defaultValues: { ...profile ?? emptyProfile },
   });
@@ -59,6 +61,7 @@ const ProfileForm = ({ profile, onSubmit }: any) => {
       }}
     />
     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start' }}>
+      <ImageUpload imageUrl={imageUrl} setImage={setImage} />
       <LoadingButton
         loading={false}
         disabled={!isDirty}
