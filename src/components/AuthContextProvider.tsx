@@ -38,6 +38,7 @@ export const AuthContextProvider = ({ children }: any) => {
 
     try {
       const user = await Auth.currentAuthenticatedUser();
+
       setUser(user);
     } catch (err) {
       setUser(null);

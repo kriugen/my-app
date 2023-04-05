@@ -1,16 +1,16 @@
 import { useRouter } from "next/router";
 
 import PostTitle from "./PostTitle";
-import { useImageUrl } from "../../hooks";
+import { useImageUrl } from "../../hooks/imageUrl";
 
 function PostTitleContainer({ post }: any) {
   const router = useRouter();
   const imageUrl = useImageUrl(post);
 
-  return <PostTitle 
+  return <PostTitle
     post={post}
     imageUrl={imageUrl}
-    onClick={() => router.push('/posts/' + post.id)} 
+    onClick={() => router.push('/posts/' + post.id)}
   />;
 }
 

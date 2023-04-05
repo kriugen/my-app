@@ -1,7 +1,7 @@
 import { API } from "aws-amplify";
 import { useRouter } from "next/router";
 import { deletePost } from "../../../graphql/mutations";
-import { useImageUrl } from "../../../hooks";
+import { useImageUrl } from "../../../hooks/imageUrl";
 import { useErrorContext } from "../../../components/ErrorContextProvider";
 
 import ViewPost from "../../../components/Post/ViewPost";

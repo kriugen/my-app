@@ -6,7 +6,7 @@ import { v4 as uuid } from "uuid";
 import Form from "../../../components/Post/EditPostForm";
 import { useErrorContext } from "../../../components/ErrorContextProvider";
 import { getPost } from "src/graphql/queries";
-import { useImageUrl } from "src/hooks";
+import { useImageUrl } from "src/hooks/imageUrl";
 import { updatePost } from "src/graphql/mutations";
 
 function FormContainer({ post }: any) {

@@ -1,30 +1,19 @@
 import { API, Storage } from "aws-amplify";
-import { useEffect, useState } from "react";
-import { createProfile, updateProfile } from "src/graphql/mutations";
-import { useImageUrl } from "src/hooks";
+import { useState } from "react";
+import { updateProfile } from "src/graphql/mutations";
+import { useImageUrl } from "src/hooks/imageUrl";
 import { useErrorContext } from "../ErrorContextProvider";
 import ProfileForm from "./ProfileForm";
 import { v4 as uuid } from "uuid";
-import { getProfile } from "src/graphql/queries";
+import { useProfile } from "src/hooks/profile";
 
 function ProfileContainer({ id }: any) {
   const { setError } = useErrorContext();
-  const [profile, setProfile] = useState<{ id: string } | null>(null);
+
+  const { profile, setProfile } = useProfile(id);
 
   const [image, setImage] = useState(null);
   const imageUrl = useImageUrl(profile);
-
-  useEffect(() => {
-    profileHandler();
-    async function profileHandler() {
-      try {
-        const data = await getOrCreateProfile(id);
-        setProfile(data);
-      } catch (e: any) {
-        setError(e.message);
-      }
-    }
-  }, [id, setError])
 
   if (!profile) {
     return <div>Loading Profile</div>
@@ -47,7 +36,7 @@ function ProfileContainer({ id }: any) {
         authMode: "AMAZON_COGNITO_USER_POOLS",
       });
 
-      setProfile(updatedProfile);
+      setProfile(updatedProfile)
     } catch (e: any) {
       setError(e.message);
       return null;
@@ -56,30 +45,6 @@ function ProfileContainer({ id }: any) {
 
   return <ProfileForm profile={profile} imageUrl={imageUrl} setImage={setImage}
     onSubmit={(profile: any) => submitProfile(profile)} />
-}
-
-async function getOrCreateProfile(id: string) {
-  const profileData: any = await API.graphql({
-    query: getProfile,
-    variables: { id },
-  });
-
-  let data = profileData.data.getProfile;
-  if (!data) {
-    data = {
-      id
-    };
-
-    await API.graphql({
-      query: createProfile,
-      variables: {
-        input: data,
-      },
-      authMode: "AMAZON_COGNITO_USER_POOLS",
-    });
-  }
-
-  return data;
 }
 
 export default ProfileContainer;
