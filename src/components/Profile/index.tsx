@@ -5,16 +5,7 @@ import { useImageUrl } from "src/hooks";
 import { useErrorContext } from "../ErrorContextProvider";
 import ProfileForm from "./ProfileForm";
 import { v4 as uuid } from "uuid";
-
-const getProfile = `
-  query GetProfile($id: ID!) {
-    getProfile(id: $id) {
-      id
-      firstName
-      lastName
-      DOB
-    }
-  }`;
+import { getProfile } from "src/graphql/queries";
 
 function ProfileContainer({ id }: any) {
   const { setError } = useErrorContext();

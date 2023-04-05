@@ -4,7 +4,7 @@ import * as yup from "yup";
 
 import { Box, TextField } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import ImageUpload from "../ImageUpload";
 
@@ -22,9 +22,15 @@ const ProfileForm = ({ profile, onSubmit, imageUrl, setImage }: any) => {
     defaultValues: { ...profile ?? emptyProfile },
   });
 
+  const [imageIsDirty, setImageIsDirty] = useState(false);
+
   useEffect(() => {
     reset(profile);
   }, [profile, reset]);
+
+  useEffect(() => {
+    setImageIsDirty(false);
+  }, [imageUrl]);
 
   return <Box component="form"
     sx={{ width: 1, m: 3 }}
@@ -61,10 +67,14 @@ const ProfileForm = ({ profile, onSubmit, imageUrl, setImage }: any) => {
       }}
     />
     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start' }}>
-      <ImageUpload imageUrl={imageUrl} setImage={setImage} />
+      <ImageUpload imageUrl={imageUrl} setImage={(image) => {
+        setImage(image);
+        setImageIsDirty(true);
+      }}
+      />
       <LoadingButton
         loading={false}
-        disabled={!isDirty}
+        disabled={!isDirty && !imageIsDirty}
         type="submit"
         variant="contained"
         fullWidth
