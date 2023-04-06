@@ -38,7 +38,7 @@ function ProfileContainer({ id }: any) {
 
       setProfile(updatedProfile)
     } catch (e: any) {
-      setError(e.message);
+      setError(e);
       return null;
     }
   }

@@ -5,27 +5,27 @@ import { useErrorContext } from "./ErrorContextProvider";
 import { useLoadingContext } from "./LoadingContextProvider";
 
 const ErrorAlert = () => {
-    const router = useRouter();
-    const { error, setError } = useErrorContext();
-    const { setLoading } = useLoadingContext();
+  const router = useRouter();
+  const { error, setError } = useErrorContext();
+  const { setLoading } = useLoadingContext();
 
-    useEffect(() => {
-      if (error)
-        setLoading(false);
-    }, [error, setLoading]);
+  useEffect(() => {
+    if (error)
+      setLoading(false);
+  }, [error, setLoading]);
 
-    useEffect(() => {
-        const handleRouteChange = (url: any) => {
-            setError('');        
-        }
-    
-        router.events.on('routeChangeStart', handleRouteChange)
-        return () => {
-          router.events.off('routeChangeStart', handleRouteChange)
-        };
-    }, [router.events, setError]);
-        
-    return error ? <Alert data-test='error-alert' severity='error'>{ error }</Alert> : null; 
+  useEffect(() => {
+    const handleRouteChange = (_url: any) => {
+      setError('');
+    }
+
+    router.events.on('routeChangeStart', handleRouteChange)
+    return () => {
+      router.events.off('routeChangeStart', handleRouteChange)
+    };
+  }, [router.events, setError]);
+
+  return error ? <Alert data-test='error-alert' severity='error'>{error}</Alert> : null;
 }
 
 export default ErrorAlert;
