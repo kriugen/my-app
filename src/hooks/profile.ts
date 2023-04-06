@@ -22,7 +22,7 @@ export function useProfile(id: string) {
   return { profile, setProfile };
 }
 
-async function getOrCreateProfile(id: string) {
+export async function getOrCreateProfile(id: string) {
   const profileData: any = await API.graphql({
     query: getProfile,
     variables: { id },

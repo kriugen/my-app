@@ -76,7 +76,7 @@ const UserDropdown = () => {
         <Avatar
           onClick={handleDropdownOpen}
           sx={{ width: 40, height: 40 }}
-          src='/images/avatars/broken-link.png'
+          src={user?.profile.imageUrl}
           alt={user ? user.username : ''}
         />
       </Badge>
