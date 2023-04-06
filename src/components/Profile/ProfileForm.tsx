@@ -67,7 +67,7 @@ const ProfileForm = ({ profile, onSubmit, imageUrl, setImage }: any) => {
       }}
     />
     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start' }}>
-      <ImageUpload imageUrl={imageUrl} setImage={(image) => {
+      <ImageUpload imageUrl={imageUrl} setImage={(image: any) => {
         setImage(image);
         setImageIsDirty(true);
       }}
