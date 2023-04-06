@@ -96,7 +96,7 @@ const UserDropdown = () => {
               anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
             >
               <Avatar
-                src='/images/avatars/broken-link.png'
+                src={user.profile.imageUrl}
                 alt={user ? user.username : ''}
                 sx={{ width: '2.5rem', height: '2.5rem' }}
               />
