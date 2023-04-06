@@ -2,12 +2,12 @@ import { useContext, useState } from "react";
 import { createContext } from "react";
 
 type ContextType = {
-  error: string,
+  error: string | null,
   setError: (error: any) => void,
 }
 
 const defaultValue = {
-  error: '',
+  error: null,
   setError: (_error: any) => {
     throw new Error('Context not initialized');
   },
@@ -15,20 +15,23 @@ const defaultValue = {
 
 const ErrorContext = createContext<ContextType>(defaultValue);
 export const ErrorContextProvider = ({ children }: any) => {
-  const [error, setError] = useState(defaultValue.error);
+  const [error, setError] = useState<string | null>(defaultValue.error);
   return (
     <ErrorContext.Provider value={{
       error, setError: (e) => {
-        if (e) {
-          console.error('AppError', e);
-          if (e.errors) {
-            const errors = e.errors.reduce((acc: any, error: any) => {
-              return acc += error.message + '; ';
-            }, '');
+        if (!e) {
+          setError(null);
+          return;
+        }
 
-            setError(errors);
-            return;
-          }
+        console.error('AppError', e);
+        if (e.errors) {
+          const errors = e.errors.reduce((acc: any, error: any) => {
+            return acc += error.message + '; ';
+          }, '');
+
+          setError(errors);
+          return;
         }
 
         if (e.message) {

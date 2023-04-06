@@ -26,8 +26,21 @@ function ProfileContainer({ id }: any) {
     }
   }
 
-  async function submitProfile(updatedProfile: any) {
+  async function submitProfile(formData: any) {
     try {
+      const updatedProfile = (({
+        id,
+        firstName,
+        lastName,
+        DOB,
+        image }: any) => ({
+          id,
+          firstName,
+          lastName,
+          DOB,
+          image
+        }))(formData);
+
       await saveImage(updatedProfile);
 
       await API.graphql({
@@ -36,7 +49,8 @@ function ProfileContainer({ id }: any) {
         authMode: "AMAZON_COGNITO_USER_POOLS",
       });
 
-      setProfile(updatedProfile)
+      setProfile(updatedProfile);
+      setError(null);
     } catch (e: any) {
       setError(e);
       return null;

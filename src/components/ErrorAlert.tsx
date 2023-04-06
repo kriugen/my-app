@@ -16,7 +16,7 @@ const ErrorAlert = () => {
 
   useEffect(() => {
     const handleRouteChange = (_url: any) => {
-      setError('');
+      setError(null);
     }
 
     router.events.on('routeChangeStart', handleRouteChange)
